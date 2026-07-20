@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useTheme } from '../theme.jsx'
 import LogoWordmark from './LogoWordmark.jsx'
 
@@ -14,10 +15,12 @@ export default function TopNav() {
         <LogoWordmark ariaLabel="Niki" dataOdId="logo" />
         <nav className="topnav-links" data-od-id="nav-links">
           <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-          <a href="#why">Why</a>
-          <a href="#pipeline">Pipeline</a>
-          <a href="#start">Install</a>
-          <a href="#faq">FAQ</a>
+          <Link to="/#why">Why</Link>
+          <Link to="/#pipeline">Pipeline</Link>
+          <Link to="/#pricing">Pricing</Link>
+          <Link to="/#start">Install</Link>
+          <Link to="/waitlist">Waitlist</Link>
+          <Link to="/#faq">FAQ</Link>
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 
 const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
@@ -8,10 +9,12 @@ export default function Footer() {
       <Reveal className="container">
         <div className="foot-links" data-od-id="footer-links">
           <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-          <a href="#why">Why</a>
-          <a href="#pipeline">Pipeline</a>
-          <a href="#start">Install</a>
-          <a href="#faq">FAQ</a>
+          <Link to="/#why">Why</Link>
+          <Link to="/#pipeline">Pipeline</Link>
+          <Link to="/#pricing">Pricing</Link>
+          <Link to="/#start">Install</Link>
+          <Link to="/waitlist">Waitlist</Link>
+          <Link to="/#faq">FAQ</Link>
         </div>
         <div className="foot-bottom">
           <span>© 2026 Niki · BUSL-1.1 · Built in Rust</span>

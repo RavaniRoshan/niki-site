@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 interface PixelGridProps {
   bgColor?: string
@@ -36,8 +36,6 @@ interface Pixel {
 export function PixelGrid({
   bgColor = "transparent",
   pixelColor = "#0000ff",
-  numPixelsX = 10,
-  numPixelsY = 10,
   pixelSize = 3,
   pixelSpacing = 3,
   pixelDeathFade = 10,
@@ -51,22 +49,25 @@ export function PixelGrid({
 }: PixelGridProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pixelsRef = useRef<Pixel[]>([])
-  const [isAppeared, setIsAppeared] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+    const parent = canvas.parentElement
 
     const c2d = canvas.getContext("2d", { alpha: true })
     if (!c2d) return
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    resizeCanvas()
-    window.addEventListener("resize", resizeCanvas)
+    // Perpetual full-canvas repaints are the main scroll-jank source. We:
+    //  - size the canvas to its PARENT (not the window) so the parent's
+    //    overflow:hidden actually clips it to the hero/brand box;
+    //  - cap the draw rate to ~20fps (pixels fade slowly — 60 is wasted);
+    //  - pause the rAF loop entirely when offscreen or tab-hidden.
+    const FRAME_MS = 1000 / 20
+    let rafId: number | null = null
+    let running = false
+    let inView = false
+    let lastDraw = 0
 
     const randomAlpha = () => {
       const rand = Math.random() * 100
@@ -103,10 +104,15 @@ export function PixelGrid({
       }
     }
 
-    // Initialize pixels dynamically based on viewport
+    const parentSize = () => ({
+      w: parent ? parent.clientWidth : window.innerWidth,
+      h: parent ? parent.clientHeight : window.innerHeight,
+    })
+
     const initPixels = () => {
-      const cols = Math.ceil(window.innerWidth / (pixelSize + pixelSpacing))
-      const rows = Math.ceil(window.innerHeight / (pixelSize + pixelSpacing))
+      const { w, h } = parentSize()
+      const cols = Math.ceil(w / (pixelSize + pixelSpacing))
+      const rows = Math.ceil(h / (pixelSize + pixelSpacing))
       pixelsRef.current = []
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
@@ -115,8 +121,16 @@ export function PixelGrid({
       }
     }
 
-    initPixels()
-    setIsAppeared(true)
+    const resizeCanvas = () => {
+      const { w, h } = parentSize()
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      canvas.width = Math.max(1, Math.floor(w * dpr))
+      canvas.height = Math.max(1, Math.floor(h * dpr))
+      canvas.style.width = w + "px"
+      canvas.style.height = h + "px"
+      c2d.setTransform(dpr, 0, 0, dpr, 0, 0)
+      initPixels()
+    }
 
     const drawPixel = (pixel: Pixel) => {
       pixel.alpha = Math.min(Math.max(pixel.alpha, 0.1), pixel.maxAlpha)
@@ -146,7 +160,12 @@ export function PixelGrid({
       }
     }
 
-    const renderLoop = () => {
+    const renderLoop = (now: number) => {
+      if (!running) return
+      rafId = requestAnimationFrame(renderLoop)
+      if (now - lastDraw < FRAME_MS) return
+      lastDraw = now
+
       if (bgColor === "transparent") c2d.clearRect(0, 0, canvas.width, canvas.height)
       else {
         c2d.fillStyle = bgColor
@@ -161,13 +180,46 @@ export function PixelGrid({
       }
 
       for (const pixel of pixelsRef.current) drawPixel(pixel)
-      requestAnimationFrame(renderLoop)
     }
 
-    renderLoop()
+    const start = () => {
+      if (running) return
+      running = true
+      lastDraw = 0
+      rafId = requestAnimationFrame(renderLoop)
+    }
+    const stop = () => {
+      running = false
+      if (rafId !== null) cancelAnimationFrame(rafId)
+      rafId = null
+    }
+
+    resizeCanvas()
+    window.addEventListener("resize", resizeCanvas)
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          inView = e.isIntersecting
+          if (inView && !document.hidden) start()
+          else stop()
+        }
+      },
+      { threshold: 0 },
+    )
+    io.observe(canvas)
+
+    const onVisibility = () => {
+      if (document.hidden) stop()
+      else if (inView) start()
+    }
+    document.addEventListener("visibilitychange", onVisibility)
 
     return () => {
+      stop()
       window.removeEventListener("resize", resizeCanvas)
+      document.removeEventListener("visibilitychange", onVisibility)
+      io.disconnect()
     }
   }, [
     bgColor,
@@ -186,12 +238,10 @@ export function PixelGrid({
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed inset-0 w-full h-full ${className}`}
+      className={`absolute inset-0 h-full w-full ${className}`}
       style={{
         display: "block",
         backgroundColor: "transparent",
-        width: "100vw",
-        height: "100vh",
       }}
     />
   )
