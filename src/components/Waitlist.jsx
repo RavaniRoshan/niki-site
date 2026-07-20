@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useForm } from '@formspree/react'
 import { Reveal } from './motion.jsx'
 import {
   SEGMENTS,
@@ -7,11 +8,12 @@ import {
   SEGMENT_MANAGED_CLOUD,
 } from '../lib/waitlist.js'
 
-// Real capture goes here. Swap the placeholder for a Formspree form id, or set
-// VITE_WAITLIST_FORM in the env to override without editing code.
-const WAITLIST_ENDPOINT =
+// Formspree form id. Override without editing code via VITE_WAITLIST_FORM
+// (e.g. in .env.local). The id is client-side by design — the browser
+// POSTs to https://formspree.io/f/<id>, so it is not a secret.
+const FORM_ID =
   (import.meta && import.meta.env && import.meta.env.VITE_WAITLIST_FORM) ||
-  'https://formspree.io/f/xxxxxxxx'
+  '3049879369762733580'
 
 const TEAM_SIZES = ['solo', '2–5', '6+', 'enterprise']
 
@@ -19,14 +21,16 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function Waitlist() {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [formState, submit] = useForm(FORM_ID)
+  const { submitting, succeeded, errors: serverErrors } = formState
+
   const [email, setEmail] = useState('')
   const [segment, setSegment] = useState(
-    () => SEGMENTS.includes(searchParams.get('segment')) ? searchParams.get('segment') : ''
+    () => (SEGMENTS.includes(searchParams.get('segment')) ? searchParams.get('segment') : '')
   )
   const [teamSize, setTeamSize] = useState('')
   const [stack, setStack] = useState('')
   const [gotcha, setGotcha] = useState('')
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
   const [errors, setErrors] = useState({})
   const emailRef = useRef(null)
 
@@ -56,36 +60,24 @@ export default function Waitlist() {
     setErrors(next)
     if (next.email && emailRef.current) emailRef.current.focus()
     else if (next.segment) {
-      const el = document.getElementById('seg-' + SEGMENTS[0].value)
+      const el = document.getElementById('seg-' + SEGMENTS[0])
       if (el) el.focus()
     }
     return Object.keys(next).length === 0
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (status === 'submitting') return
-    if (!validate()) return
-
-    setStatus('submitting')
-    try {
-      const res = await fetch(WAITLIST_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          email: email.trim(),
-          segment,
-          teamSize: teamSize || undefined,
-          stack: stack.trim() || undefined,
-          _gotcha: gotcha || undefined,
-        }),
-      })
-      if (!res.ok) throw new Error('Request failed: ' + res.status)
-      setStatus('success')
-    } catch (err) {
-      setStatus('error')
+  const onSubmit = (e) => {
+    // Run our own validation first; if it fails, stop before Formspree sees it.
+    if (!validate()) {
+      e.preventDefault()
+      return
     }
+    submit(e)
   }
+
+  const serverMessage = serverErrors?.formErrors?.length
+    ? serverErrors.formErrors.map((f) => f.message).join(', ')
+    : "Something went wrong sending your request. Please try again in a moment."
 
   return (
     <section className="section" data-od-id="waitlist" id="waitlist">
@@ -97,7 +89,7 @@ export default function Waitlist() {
           required to get value.
         </p>
 
-        {status === 'success' ? (
+        {succeeded ? (
           <div className="wl-success" data-od-id="wl-success" role="status">
             <h3 className="body-strong mb-lg">You're on the list.</h3>
             <p className="body" style={{ maxWidth: '52ch' }}>
@@ -107,13 +99,14 @@ export default function Waitlist() {
             </p>
           </div>
         ) : (
-          <form className="wl-form" data-od-id="wl-form" onSubmit={handleSubmit} noValidate>
+          <form className="wl-form" data-od-id="wl-form" onSubmit={onSubmit} noValidate>
             {/* honeypot — hidden from humans, bots fill it */}
             <div className="wl-gotcha" aria-hidden="true">
               <label>
                 Leave this empty
                 <input
                   type="text"
+                  name="_gotcha"
                   tabIndex={-1}
                   autoComplete="off"
                   value={gotcha}
@@ -128,6 +121,7 @@ export default function Waitlist() {
               </label>
               <input
                 id="wl-email"
+                name="email"
                 ref={emailRef}
                 className="wl-input"
                 type="email"
@@ -203,6 +197,7 @@ export default function Waitlist() {
                 </label>
                 <select
                   id="wl-team"
+                  name="teamSize"
                   className="wl-select"
                   value={teamSize}
                   onChange={(e) => setTeamSize(e.target.value)}
@@ -223,6 +218,7 @@ export default function Waitlist() {
                 </label>
                 <input
                   id="wl-stack"
+                  name="stack"
                   className="wl-input"
                   type="text"
                   placeholder="e.g. TypeScript + React, Python, Rust"
@@ -233,9 +229,9 @@ export default function Waitlist() {
               </div>
             </div>
 
-            {status === 'error' && (
+            {serverErrors && (
               <p className="wl-error wl-form-error" role="alert">
-                Something went wrong sending your request. Please try again in a moment.
+                {serverMessage}
               </p>
             )}
 
@@ -244,9 +240,9 @@ export default function Waitlist() {
                 type="submit"
                 className="btn btn-primary"
                 data-od-id="wl-submit"
-                disabled={status === 'submitting'}
+                disabled={submitting}
               >
-                {status === 'submitting' ? 'Joining…' : 'Join waitlist'}
+                {submitting ? 'Joining…' : 'Join waitlist'}
               </button>
               <p className="caption wl-fineprint">
                 Invite-based · prototype status · we'll only email you about NIKI.

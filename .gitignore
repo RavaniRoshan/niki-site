@@ -2,3 +2,8 @@ node_modules
 dist
 *Zone.Identifier
 niki-product-studio.html
+
+# env / secrets (keep .env.example tracked as a template)
+.env
+.env.local
+.env.*.local
