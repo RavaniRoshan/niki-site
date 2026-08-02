@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useForm } from '@formspree/react'
+import { track } from '@vercel/analytics'
 import { Reveal } from './motion.jsx'
 import {
   SEGMENTS,
@@ -68,12 +69,39 @@ export default function Waitlist() {
 
   const onSubmit = (e) => {
     // Run our own validation first; if it fails, stop before Formspree sees it.
-    if (!validate()) {
+    const isValid = validate()
+    if (!isValid) {
+      track('waitlist_validation_failed', {
+        email: EMAIL_RE.test(email.trim()) ? 'ok' : 'invalid',
+        segment: segment ? 'selected' : 'missing',
+      })
       e.preventDefault()
       return
     }
+    track('waitlist_submitted', {
+      segment,
+      teamSize: teamSize || 'unknown',
+      hasStack: stack.trim() ? 'yes' : 'no',
+    })
     submit(e)
   }
+
+  useEffect(() => {
+    track('waitlist_viewed')
+  }, [])
+
+  useEffect(() => {
+    if (succeeded) {
+      track('waitlist_submission_success', {
+        segment: segment || 'unknown',
+        teamSize: teamSize || 'unknown',
+      })
+    }
+  }, [segment, succeeded, teamSize])
+
+  useEffect(() => {
+    if (serverErrors) track('waitlist_submission_error')
+  }, [serverErrors])
 
   const serverMessage = serverErrors?.formErrors?.length
     ? serverErrors.formErrors.map((f) => f.message).join(', ')

@@ -2,10 +2,16 @@ import { Link } from 'react-router-dom'
 import TopNav from './TopNav.jsx'
 import Waitlist from './Waitlist.jsx'
 import Footer from './Footer.jsx'
+import { Seo } from '../seo.jsx'
 
 export default function WaitlistPage() {
   return (
     <>
+      <Seo
+        title="Join the Niki private beta · Hermetic AI coding agents"
+        description="Request private beta access to Niki, the AI software engineering system that runs isolated coding agents and hands teams reviewable pull request branches."
+        path="/waitlist"
+      />
       <TopNav />
       <main id="content">
         <Waitlist />

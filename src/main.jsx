@@ -9,6 +9,7 @@ import {
 import App from './App.jsx'
 import WaitlistPage from './components/WaitlistPage.jsx'
 import { ThemeProvider } from './theme.jsx'
+import SiteAnalytics from './analytics.jsx'
 import './tailwind.css'
 import './styles.css'
 
@@ -38,6 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/waitlist" element={<WaitlistPage />} />
         </Routes>
+        <SiteAnalytics />
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,

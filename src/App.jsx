@@ -11,10 +11,16 @@ import Faq from './components/Faq.jsx'
 import CtaStrip from './components/CtaStrip.jsx'
 import BrandLogo from './components/BrandLogo.jsx'
 import Footer from './components/Footer.jsx'
+import { Seo } from './seo.jsx'
 
 export default function App() {
   return (
     <>
+      <Seo
+        title="Niki · AI coding agents that ship reviewable pull requests"
+        description="Niki is a hermetic multi-agent AI coding system where Planner, Coder, Tester, and Reviewer agents collaborate in a sandbox and deliver a clean pull request branch."
+        path="/"
+      />
       <TopNav />
       <main id="content">
         <Hero />

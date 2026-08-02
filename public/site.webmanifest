@@ -1,0 +1,16 @@
+{
+  "name": "Niki",
+  "short_name": "Niki",
+  "description": "Hermetic multi-agent AI coding system that ships reviewable pull request branches.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f2ea",
+  "theme_color": "#201d1d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}
