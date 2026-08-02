@@ -2,7 +2,8 @@ const ITEMS = [
   ['Parallel coders + synthesizer', '— N Coders in isolated worktrees; synthesis merges the best diff'],
   ['User-defined pipeline topology', '— ordered [pipeline] stages with per-role provider/model'],
   ['Security Auditor agent', '— adversarial vulnerability pass after Reviewer via [security]'],
-  ['Sandbox trait', '— Docker · git worktree · cloud beta'],
+  ['Sandbox trait', '— Podman · Docker · git worktree · cloud beta'],
+  ['Podman-first runtime discovery', '— probes rootless/rootful Podman sockets, then Docker; no daemon, no root'],
   ['Dashboard + cost analytics', '— token usage, latency, HTML diff viewer'],
   ['External knowledge ingestion', '— doc globs + URLs into every agent prompt'],
 ]

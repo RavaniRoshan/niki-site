@@ -25,14 +25,14 @@ export default function Pricing() {
               <h3 className="tier-name">Free / Self-hosted</h3>
               <div className="tier-price">$0</div>
               <p className="tier-lede">
-                Run NIKI on your own infrastructure. Bring your own API keys, run on local
-                Docker or a git worktree. The majority path — fully functional today.
+Run NIKI on your own infrastructure. Bring your own API keys, run on local
+                 Podman or Docker, or a git worktree. The majority path — fully functional today.
               </p>
             </div>
 
             <ul className="tier-features">
               <li><span className="mark">[x]</span> Your keys, your infra (BYOK)</li>
-              <li><span className="mark">[x]</span> Docker or git-worktree isolation</li>
+              <li><span className="mark">[x]</span> Podman/Docker or git-worktree isolation</li>
               <li><span className="mark">[x]</span> Review the branch before you merge</li>
               <li><span className="mark">[x]</span> Unlimited local agents &amp; use cases</li>
             </ul>

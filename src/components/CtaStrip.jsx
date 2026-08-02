@@ -8,7 +8,7 @@ export default function CtaStrip() {
       <Reveal className="container">
         <h2 className="heading mb-lg">Read the code. Run a task. Review the branch.</h2>
         <p className="body mb-xl" style={{ maxWidth: '48ch' }}>
-          Open source hermetic multi-agent coding — built in Rust, sandboxed in Docker, yours to fork.
+          Open source hermetic multi-agent coding — built in Rust, sandboxed in Podman or Docker, yours to fork.
         </p>
         <div className="hero-cta">
           <a className="btn btn-dark" data-od-id="footer-cta" href={GITHUB_URL} target="_blank" rel="noopener">

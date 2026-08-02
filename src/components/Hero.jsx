@@ -56,7 +56,7 @@ export default function Hero() {
           <p className="lede">
             Niki is an AI software engineering assistant that turns a requested change into a
             reviewable pull request branch. Four isolated agents — Planner, Coder, Tester, Reviewer —
-            collaborate inside a Docker sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong>
+            collaborate inside a Podman or Docker sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong>
             branch. Your working tree is never touched.
           </p>
         </StaggerItem>
@@ -95,7 +95,7 @@ export default function Hero() {
             <span className="cmd">Build</span>
             <span className="model">Add GET /health → {'{ status, uptime }'}</span>
             <span className="tok">sandbox</span>
-            <span className="tok">docker</span>
+            <span className="tok">podman</span>
           </div>
           <div className="tui-log" data-od-id="tui-log" aria-live="polite">
             <div className="dim">$ niki run "Add a GET /health endpoint" --project ./my-app</div>
