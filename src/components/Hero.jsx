@@ -54,9 +54,10 @@ export default function Hero() {
         </StaggerItem>
         <StaggerItem>
           <p className="lede">
-            Four isolated agents — Planner, Coder, Tester, Reviewer — collaborate inside a Docker
-            sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong> branch. Your
-            working tree is never touched.
+            Niki is an AI software engineering assistant that turns a requested change into a
+            reviewable pull request branch. Four isolated agents — Planner, Coder, Tester, Reviewer —
+            collaborate inside a Docker sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong>
+            branch. Your working tree is never touched.
           </p>
         </StaggerItem>
         <StaggerItem>

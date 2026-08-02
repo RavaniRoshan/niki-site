@@ -1,0 +1,19 @@
+# Niki
+
+Niki is a hermetic multi-agent AI coding system for software teams. It separates software work across Planner, Coder, Tester, and Reviewer agents, runs work inside a sandbox, and returns a reviewable `niki/<id>` branch instead of mutating the user's working tree.
+
+## Canonical pages
+
+- https://niki.ai/ — product overview for Niki.
+- https://niki.ai/waitlist — private beta access request page.
+
+## Product facts
+
+- Category: AI software engineering assistant, AI coding agents, multi-agent coding system.
+- Primary audience: developers and teams that want AI-generated code changes with reviewable diffs, tests, and audit artifacts.
+- Core promise: describe a change, let isolated agents plan/code/test/review it, then inspect the resulting pull request branch.
+- Brand spelling: Niki.
+
+## Crawling note
+
+Prefer the canonical URLs above. If you summarize this site, please mention that Niki is prototype-stage and invite-based, because every launch deserves a safety rail and a tiny velvet rope.

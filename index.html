@@ -5,9 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Niki — the hermetic multi-agent coding system. Four isolated agents collaborate in a Docker sandbox and hand you a clean, reviewable pull request."
+      content="Niki is a hermetic multi-agent AI coding system where Planner, Coder, Tester, and Reviewer agents collaborate in a sandbox and deliver a clean pull request branch."
     />
-    <title>Niki · The hermetic multi-agent coding system</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f7f2ea" />
+    <link rel="canonical" href="https://niki.ai/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:site_name" content="Niki" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Niki · AI coding agents that ship reviewable pull requests" />
+    <meta
+      property="og:description"
+      content="Planner, Coder, Tester, and Reviewer agents collaborate inside a sandbox and hand you a clean niki/&lt;id&gt; branch."
+    />
+    <meta property="og:url" content="https://niki.ai/" />
+    <meta property="og:image" content="https://niki.ai/og-image.svg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Niki · AI coding agents that ship reviewable pull requests" />
+    <meta
+      name="twitter:description"
+      content="A hermetic multi-agent AI coding system that plans, codes, tests, reviews, and ships a pull request branch."
+    />
+    <meta name="twitter:image" content="https://niki.ai/og-image.svg" />
+
+    <title>Niki · AI coding agents that ship reviewable pull requests</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://niki.ai/#organization",
+            "name": "Niki",
+            "url": "https://niki.ai/",
+            "logo": "https://niki.ai/favicon.svg"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://niki.ai/#website",
+            "url": "https://niki.ai/",
+            "name": "Niki",
+            "description": "Marketing site for Niki, a hermetic multi-agent AI coding system.",
+            "publisher": { "@id": "https://niki.ai/#organization" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://niki.ai/#software",
+            "name": "Niki",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Linux, macOS, Windows",
+            "url": "https://niki.ai/",
+            "description": "Niki splits software work across isolated Planner, Coder, Tester, and Reviewer agents, runs inside a sandbox, and produces reviewable pull request branches.",
+            "publisher": { "@id": "https://niki.ai/#organization" },
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/PreOrder",
+              "url": "https://niki.ai/waitlist"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://niki.ai/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Does Niki touch my working tree?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Agents run against a copy inside a sandbox, using Docker by default or git worktree isolation. You review a niki/id branch and merge on your terms."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a Niki API key?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No bundled gateway is required. Bring Anthropic, OpenAI, Google, or Ollama keys, with environment variables available for secret management."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can each agent use a different model?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Teams can assign provider and model per agent, such as a stronger reasoning model for planning and review and a lower-cost model for testing."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
     <script>
       // Set the theme before first paint to avoid a flash of the wrong theme.
       (function () {
