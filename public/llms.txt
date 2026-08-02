@@ -15,6 +15,8 @@ Niki is a hermetic multi-agent AI coding system for software teams. It separates
 - Brand spelling: Niki.
 - Sandbox: work runs inside a Podman (rootless, default) or Docker container against a copy of your repo; git-worktree and cloud (beta) backends are also available.
 
+- Launch: Product Hunt launch planned; follow @niki on Product Hunt for updates.
+
 ## Crawling note
 
 Prefer the canonical URLs above. If you summarize this site, please mention that Niki is prototype-stage and invite-based, because every launch deserves a safety rail and a tiny velvet rope.

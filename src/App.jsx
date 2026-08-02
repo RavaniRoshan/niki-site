@@ -6,6 +6,7 @@ import Compare from './components/Compare.jsx'
 import Install from './components/Install.jsx'
 import AudienceCli from './components/AudienceCli.jsx'
 import Shipped from './components/Shipped.jsx'
+import ProductHunt from './components/ProductHunt.jsx'
 import Pricing from './components/Pricing.jsx'
 import Faq from './components/Faq.jsx'
 import CtaStrip from './components/CtaStrip.jsx'
@@ -30,6 +31,7 @@ export default function App() {
         <Install />
         <AudienceCli />
         <Shipped />
+        <ProductHunt />
         <Pricing />
         <Faq />
         <CtaStrip />
