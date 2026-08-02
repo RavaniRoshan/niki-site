@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 
 const STORAGE_KEY = 'niki-theme'
 
@@ -11,8 +11,21 @@ function getInitialTheme() {
   return 'light'
 }
 
+function getSystemTheme() {
+  if (typeof window === 'undefined') return 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(getInitialTheme)
+  const [explicitTheme, setExplicitTheme] = useState(() => {
+    if (typeof localStorage === 'undefined') return false
+    try {
+      return localStorage.getItem(STORAGE_KEY) !== null
+    } catch {
+      return false
+    }
+  })
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -23,7 +36,31 @@ export function ThemeProvider({ children }) {
     }
   }, [theme])
 
-  const toggle = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const handler = (e) => {
+      if (explicitTheme) return
+      const next = e.matches ? 'dark' : 'light'
+      setTheme(next)
+    }
+    if (mq.addEventListener) {
+      mq.addEventListener('change', handler)
+    } else if (mq.addListener) {
+      mq.addListener(handler)
+    }
+    return () => {
+      if (mq.removeEventListener) {
+        mq.removeEventListener('change', handler)
+      } else if (mq.removeListener) {
+        mq.removeListener(handler)
+      }
+    }
+  }, [explicitTheme])
+
+  const toggle = useCallback(() => {
+    setExplicitTheme(true)
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+  }, [])
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>{children}</ThemeContext.Provider>
