@@ -47,7 +47,7 @@ export default function Hero() {
       </div>
       <Stagger className="hero-text" onLoad>
         <StaggerItem>
-          <span className="badge">Prototype</span>
+          <span className="badge">Beta</span>
         </StaggerItem>
         <StaggerItem>
           <h1 className="display">Describe it. Niki ships the pull request.</h1>
