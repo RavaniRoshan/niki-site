@@ -13,6 +13,7 @@ Niki is a hermetic multi-agent AI coding system for software teams. It separates
 - Primary audience: developers and teams that want AI-generated code changes with reviewable diffs, tests, and audit artifacts.
 - Core promise: describe a change, let isolated agents plan/code/test/review it, then inspect the resulting pull request branch.
 - Brand spelling: Niki.
+- Sandbox: work runs inside a Podman (rootless, default) or Docker container against a copy of your repo; git-worktree and cloud (beta) backends are also available.
 
 ## Crawling note
 

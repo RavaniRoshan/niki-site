@@ -7,8 +7,8 @@ const TABS = [
     cmd: 'git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release',
   },
   {
-    label: 'docker',
-    cmd: 'docker build -t niki-sandbox:24.04 -f docker/Dockerfile .',
+    label: 'podman',
+    cmd: 'podman build -t niki-sandbox:24.04 -f docker/Dockerfile .   # or: docker build ...',
   },
   {
     label: 'config',
@@ -44,7 +44,7 @@ export default function Install() {
       <Reveal className="container">
         <h2 className="heading mb-lg">Install</h2>
         <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-          Prerequisites: Rust (2024 edition), Docker running, and an API key for at least one LLM
+          Prerequisites: Rust (2024 edition), Podman (recommended) or Docker running, and an API key for at least one LLM
           provider.
         </p>
 
@@ -87,8 +87,8 @@ export default function Install() {
           <div className="list-row">
             <span className="mark">[x]</span>
             <div>
-              <span className="label">Backends</span> — docker (default) · --backend worktree ·
-              --backend cloud (beta)
+<span className="label">Backends</span> — podman (default) · docker fallback · --backend worktree ·
+                               --backend cloud (beta)
             </div>
           </div>
         </div>

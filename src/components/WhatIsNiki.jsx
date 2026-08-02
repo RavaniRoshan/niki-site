@@ -12,7 +12,7 @@ const FEATURES = [
     id: 'feat-hermetic',
     text: (
       <>
-        <span className="label">Hermetic by default</span> — All work happens in a Docker sandbox
+        <span className="label">Hermetic by default</span> — All work happens in a Podman or Docker sandbox
         bind-mounted to a copy of your project. Your tree is never mutated mid-run.
       </>
     ),

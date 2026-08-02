@@ -6,7 +6,7 @@ const FAQS = [
   {
     id: 'faq-safe',
     q: 'Does Niki touch my working tree?',
-    a: 'No. Agents run against a copy inside a sandbox (Docker by default, or git worktree). You review a niki/<id> branch and merge on your terms.',
+    a: 'No. Agents run against a copy inside a sandbox (Podman or Docker by default, or git worktree). You review a niki/<id> branch and merge on your terms.',
   },
   {
     id: 'faq-keys',
@@ -25,8 +25,13 @@ const FAQS = [
   },
   {
     id: 'faq-docker',
-    q: 'What if I don’t want Docker?',
-    a: 'Use --backend worktree for git-worktree isolation without a Docker daemon, or --backend cloud (beta) when NIKI_CLOUD_ENDPOINT is set.',
+    q: 'Can I run it without Docker?',
+    a: 'Yes. Niki prefers Podman — rootless, no daemon — and falls back to Docker automatically. Or use --backend worktree for git-worktree isolation without any container runtime, or --backend cloud (beta) when NIKI_CLOUD_ENDPOINT is set.',
+  },
+  {
+    id: 'faq-podman',
+    q: 'Is Podman supported?',
+    a: 'Yes — Niki is Podman-first. It auto-detects the rootless Podman socket (no daemon, no root), then rootful Podman, then Docker. Verified end-to-end on Ubuntu 24.04 with Podman 4.9.3: image build, container lifecycle, and bind mounts all pass.',
   },
 ]
 
