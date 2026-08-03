@@ -49,6 +49,7 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
+  padding-top: 61px;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-body);
@@ -107,8 +108,10 @@ strong { font-weight: 500; }
 
 /* ── nav ── */
 .topnav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 20;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
