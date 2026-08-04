@@ -556,6 +556,33 @@ strong { font-weight: 500; }
   .split { grid-template-columns: 1fr; gap: 32px; }
 }
 
+
+/* ── product hunt ── */
+.producthunt-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.producthunt-badge {
+  display: inline-flex;
+  border-radius: var(--radius);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+.producthunt-badge:hover,
+.producthunt-badge:focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.16));
+  outline: none;
+}
+.producthunt-badge img {
+  width: 250px;
+  height: 54px;
+}
+@media (max-width: 640px) {
+  .producthunt-card { align-items: flex-start; }
+}
+
 /* ── footer ── */
 .pagefoot {
   border-top: 1px solid var(--border);
