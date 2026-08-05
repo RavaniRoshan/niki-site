@@ -7,7 +7,7 @@ export default function Demo() {
         <Reveal>
           <h2 className="heading mb-lg">See it run</h2>
           <p className="body mb-xl" style={{ maxWidth: '58ch' }}>
-            Niki runs the full Planner → Coder → Tester → Reviewer loop inside a sandbox and hands
+            Niki runs the full Planner → Coder → Tester → Red → Reviewer loop inside a sandbox and hands
             you back a branch. Here's a real session, end to end.
           </p>
           <figure className="demo-frame">

@@ -16,7 +16,7 @@ export default function TopNav() {
         <nav className="topnav-links" data-od-id="nav-links">
           <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
           <Link to="/#why">Why</Link>
-          <Link to="/#pipeline">Pipeline</Link>
+          <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
           <Link to="/#start">Install</Link>
           <Link to="/waitlist">Waitlist</Link>

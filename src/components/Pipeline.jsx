@@ -14,11 +14,17 @@ const STAGES = [
   {
     role: '03',
     name: '◉ Tester',
-    desc: 'Generates and runs tests against the change before review ever starts.',
+    desc: 'Reasons about the change against the diff and reports which tests pass or fail.',
     out: 'test results',
   },
   {
     role: '04',
+    name: '✗ Red',
+    desc: 'Adversarial agent (on by default) raises challenges about what Coder and Reviewer missed.',
+    out: 'RedChallenge',
+  },
+  {
+    role: '05',
     name: '◆ Reviewer',
     desc: 'Approves or requests changes. On bounce-back, Coder revises until pass or cap.',
     out: 'branch + report',
@@ -34,7 +40,7 @@ export default function Pipeline() {
         <Reveal>
           <h2 className="heading mb-lg">How it works</h2>
           <p className="body mb-xxl" style={{ maxWidth: '52ch' }}>
-            Default topology: Planner → Coder → Tester → Reviewer. Replace it with your own ordered
+            Default topology: Planner → Coder → Tester → Red → Reviewer. Replace it with your own ordered
             [pipeline] in niki.toml.
           </p>
         </Reveal>

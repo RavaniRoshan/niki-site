@@ -2,7 +2,7 @@ import TopNav from './components/TopNav.jsx'
 import Hero from './components/Hero.jsx'
 import WhatIsNiki from './components/WhatIsNiki.jsx'
 import Demo from './components/Demo.jsx'
-import Pipeline from './components/Pipeline.jsx'
+import HowItWorks from './components/HowItWorks.jsx'
 import Compare from './components/Compare.jsx'
 import Install from './components/Install.jsx'
 import AudienceCli from './components/AudienceCli.jsx'
@@ -25,10 +25,11 @@ export default function App() {
       />
       <TopNav />
       <main id="content">
+        <a id="top" aria-hidden="true" tabIndex={-1} />
         <Hero />
         <WhatIsNiki />
         <Demo />
-        <Pipeline />
+        <HowItWorks />
         <Compare />
         <Install />
         <AudienceCli />
