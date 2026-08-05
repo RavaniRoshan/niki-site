@@ -545,6 +545,47 @@ strong { font-weight: 500; }
   .pipe-cell:last-child { border-bottom: 0; }
 }
 
+/* ── demo ── */
+.demo-frame {
+  margin: 0;
+  background: var(--surface-dark);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.demo-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--surface-dark-elevated);
+  border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 12%, transparent);
+}
+.demo-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+.demo-dots .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--on-dark) 26%, transparent);
+}
+.demo-title {
+  font-size: 14px;
+  line-height: 2;
+  color: var(--ash);
+  margin-left: auto;
+  margin-right: auto;
+}
+.demo-gif {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--surface-dark);
+}
+
 /* ── two col ── */
 .split {
   display: grid;

@@ -1,6 +1,7 @@
 import TopNav from './components/TopNav.jsx'
 import Hero from './components/Hero.jsx'
 import WhatIsNiki from './components/WhatIsNiki.jsx'
+import Demo from './components/Demo.jsx'
 import Pipeline from './components/Pipeline.jsx'
 import Compare from './components/Compare.jsx'
 import Install from './components/Install.jsx'
@@ -26,6 +27,7 @@ export default function App() {
       <main id="content">
         <Hero />
         <WhatIsNiki />
+        <Demo />
         <Pipeline />
         <Compare />
         <Install />
