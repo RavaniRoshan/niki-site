@@ -46,7 +46,12 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+/* Eased, anchor-aware scrolling — but never for reduced-motion users, who get
+   instant jumps. scroll-padding-top keeps targets clear of the fixed nav. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   margin: 0;
   padding-top: 61px;
@@ -875,3 +880,218 @@ strong { font-weight: 500; }
 [data-theme='dark'] .wl-select { background: var(--surface-card); }
 [data-theme='dark'] .wl-seg-card { background: var(--surface-card); }
 [data-theme='dark'] .wl-seg-card.is-checked { background: var(--surface-soft); }
+
+/* ── enlarged How It Works: scroll-driven feature scroller ── */
+/* Two columns on wide screens: a sticky numbered step menu on the left, and a
+   column of large agent cards on the right. The card centred in the viewport
+   is highlighted in the menu (scroll-spy); clicking a menu item jumps to it. */
+.fs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 48px;
+}
+@media (min-width: 920px) {
+  .fs {
+    grid-template-columns: 4fr 8fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .fs-nav {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+  }
+}
+
+.fs-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.fs-nav-item {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  padding: 14px;
+  border-radius: var(--radius);
+  border-left: 2px solid transparent;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease;
+}
+.fs-nav-item:hover { color: var(--fg); background: var(--surface-soft); }
+.fs-nav-item.is-active {
+  color: var(--fg);
+  font-weight: 700;
+  background: var(--surface-soft);
+  border-left-color: var(--tui-accent);
+}
+.fs-nav-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ash);
+}
+.fs-nav-item.is-active .fs-nav-num { color: var(--tui-accent); }
+
+.fs-cards { display: flex; flex-direction: column; gap: 40px; }
+.fs-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-card);
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+.fs-card.is-active {
+  border-color: var(--hairline-strong);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+}
+.fs-card-media {
+  position: relative;
+  height: 320px;
+  background: var(--surface-dark);
+  overflow: hidden;
+}
+.fs-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px 26px;
+}
+.fs-card-glyph { font-size: 22px; line-height: 1; }
+.fs-card-title { font-size: 18px; font-weight: 500; line-height: 1.5; margin: 0; }
+.fs-card-num { color: var(--muted); font-size: 14px; margin-right: 8px; }
+
+@media (max-width: 919px) {
+  .fs-nav { position: static; margin-bottom: 8px; }
+  .fs-nav-list { flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .fs-nav-item {
+    flex: none;
+    width: auto;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    padding: 10px 12px;
+  }
+  .fs-nav-item.is-active { border-left: 0; border-bottom-color: var(--tui-accent); }
+}
+@media (max-width: 640px) {
+  .fs-card-media { height: 240px; }
+  .fs-cards { gap: 28px; }
+}
+
+/* HIW-local caption sizing (tighter than the global .caption) */
+.caption { font-size: 13px; line-height: 1.8; color: var(--muted); margin: 0; }
+
+.hiw-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.hiw-pause {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.hiw-pause:hover { border-color: var(--tui-accent); color: var(--tui-accent); }
+
+.hiw-optin { margin-top: 72px; }
+
+/* ── feature grid (opt-in modes & specialties) ──
+   Every card shares one structure: a fixed-height media band on top, then a
+   padded text block. The fixed media height keeps all cards aligned across
+   rows regardless of column span or copy length. */
+.hiw-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 28px;
+  align-items: stretch;
+}
+.hiw-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+}
+.hiw-card-media {
+  position: relative;
+  height: 280px;
+  background: var(--surface-dark);
+  overflow: hidden;
+  flex: none;
+}
+
+/* The demo clip fills the media band. Slight opacity at rest, full on
+   hover/focus, so the looping GIF/video feels calm and never harsh. */
+.hiw-clip-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.92;
+  transition: opacity 0.4s ease;
+}
+.hiw-card:hover .hiw-clip-media,
+.hiw-card:focus-within .hiw-clip-media,
+.fs-card:hover .hiw-clip-media,
+.fs-card:focus-within .hiw-clip-media { opacity: 1; }
+
+.hiw-card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px 24px;
+}
+.hiw-feature-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hiw-feature-tag {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.hiw-card code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+@media (max-width: 850px) {
+  .hiw-card-media { height: 240px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hiw-clip-media { transition: none; }
+}
