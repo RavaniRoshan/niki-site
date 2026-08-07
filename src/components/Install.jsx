@@ -1,29 +1,46 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 
-const TABS = [
+const REPO_URL = 'https://github.com/RavaniRoshan/niki'
+const RELEASES_URL = `${REPO_URL}/releases`
+
+const INSTALLERS = [
   {
-    label: 'cargo',
-    cmd: 'git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release',
+    id: 'unix',
+    label: 'Linux / macOS',
+    cmd: 'curl -fsSL https://raw.githubusercontent.com/RavaniRoshan/niki/master/install.sh | sh',
   },
   {
-    label: 'podman',
-    cmd: 'podman build -t niki-sandbox:24.04 -f docker/Dockerfile .   # or: docker build ...',
-  },
-  {
-    label: 'config',
-    cmd: 'cp niki.example.toml niki.toml && export ANTHROPIC_API_KEY=sk-ant-…',
-  },
-  {
-    label: 'run',
-    cmd: './target/release/niki run "Add a /health endpoint" --project /path/to/project',
+    id: 'windows',
+    label: 'Windows',
+    cmd: 'irm https://raw.githubusercontent.com/RavaniRoshan/niki/master/install.ps1 | iex',
   },
 ]
 
-export default function Install() {
-  const [active, setActive] = useState(0)
+const STEPS = [
+  {
+    title: '2 — Build the sandbox image',
+    caption: 'Requires Podman (recommended) or Docker running.',
+    cmd: 'podman build -t niki-sandbox:24.04 -f docker/Dockerfile .   # or: docker build ...',
+    odId: 'install-snippet-step-2',
+  },
+  {
+    title: '3 — Configure a provider',
+    caption: 'Bring an API key for at least one LLM provider.',
+    cmd: 'cp niki.example.toml niki.toml && export ANTHROPIC_API_KEY=sk-ant-…',
+    odId: 'install-snippet-step-3',
+  },
+  {
+    title: '4 — Run it',
+    caption: 'Agents run against a sandbox copy; your working tree is untouched.',
+    cmd: './target/release/niki run "Add a /health endpoint" --project /path/to/project',
+    odId: 'install-snippet-step-4',
+  },
+]
+
+function Snippet({ code, odId }) {
   const [copied, setCopied] = useState(false)
-  const code = TABS[active].cmd
 
   const handleCopy = async () => {
     try {
@@ -40,34 +57,58 @@ export default function Install() {
   }
 
   return (
+    <div className="install-snippet" data-od-id={odId}>
+      <code>{code}</code>
+      <button
+        type="button"
+        className="copy-btn"
+        data-od-id="copy-btn"
+        onClick={handleCopy}
+        title="Copy to clipboard"
+      >
+        {copied === true ? 'copied' : copied === 'select' ? 'select+copy' : 'copy'}
+      </button>
+    </div>
+  )
+}
+
+export default function Install() {
+  return (
     <section className="section" data-od-id="install" id="start">
       <Reveal className="container">
         <h2 className="heading mb-lg">Install</h2>
         <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-          Prerequisites: Rust (2024 edition), Podman (recommended) or Docker running, and an API key for at least one LLM
-          provider.
+          Install Niki in seconds. Prebuilt binaries for every platform, or build from source.
         </p>
 
-        <div className="tabs" role="tablist" data-od-id="install-tabs">
-          {TABS.map((t, i) => (
-            <button
-              type="button"
-              key={t.label}
-              className={`tab${i === active ? ' is-active' : ''}`}
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-            >
-              {t.label}
-            </button>
-          ))}
+        <div className="install-step">
+          <div className="install-step-title">1 — Get the binary</div>
+          <div className="stack-lg">
+            {INSTALLERS.map((i) => (
+              <div key={i.id}>
+                <span className="label" style={{ display: 'block', marginBottom: 8 }}>{i.label}</span>
+                <Snippet code={i.cmd} odId={`install-snippet-${i.id}`} />
+              </div>
+            ))}
+          </div>
+          <p className="install-note mt-lg">
+            Prebuilt binaries and package manager commands for every platform are on the{' '}
+            <Link className="ink" to="/downloads" data-od-id="install-downloads-link">
+              downloads page
+            </Link>
+            .
+          </p>
         </div>
-        <div className="install-snippet" data-od-id="install-snippet">
-          <code id="install-code">{code}</code>
-          <button type="button" className="copy-btn" data-od-id="copy-btn" onClick={handleCopy}>
-            {copied === true ? 'copied' : copied === 'select' ? 'select+copy' : 'copy'}
-          </button>
-        </div>
+
+        {STEPS.map((s) => (
+          <div className="install-step" key={s.title}>
+            <div className="install-step-title">{s.title}</div>
+            <p className="install-note" style={{ marginTop: 0, marginBottom: 8 }}>
+              {s.caption}
+            </p>
+            <Snippet code={s.cmd} odId={s.odId} />
+          </div>
+        ))}
 
         <div className="mt-xl stack-lg">
           <div className="list-row">
@@ -87,8 +128,8 @@ export default function Install() {
           <div className="list-row">
             <span className="mark">[x]</span>
             <div>
-<span className="label">Backends</span> — podman (default) · docker fallback · --backend worktree ·
-                               --backend cloud (beta)
+              <span className="label">Backends</span> — podman (default) · docker fallback · --backend
+              worktree · --backend cloud (beta)
             </div>
           </div>
         </div>

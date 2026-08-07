@@ -13,6 +13,7 @@ Niki is a hermetic multi-agent AI coding system for software teams. It separates
 - Primary audience: developers and teams that want AI-generated code changes with reviewable diffs, tests, and audit artifacts.
 - Core promise: describe a change, let isolated agents plan/code/test/review it, then inspect the resulting pull request branch.
 - Brand spelling: Niki.
+- Install: source build today (`git clone` + `cargo build --release`, Rust 2024 edition). Planned channels: shell installer (Linux/macOS), PowerShell installer plus winget/Scoop (Windows), Homebrew tap (macOS), and `cargo install niki`. Prebuilt binaries target x86_64 Linux, ARM64 Linux, x86_64 Windows, x86_64 macOS, and Apple Silicon macOS via GitHub Releases.
 - Sandbox: work runs inside a Podman (rootless, default) or Docker container against a copy of your repo; git-worktree and cloud (beta) backends are also available.
 
 - Launch: Product Hunt launch planned; follow @niki on Product Hunt for updates.

@@ -1,0 +1,15 @@
+Goal: ph-launch-assets-a1b2c3 — COMPLETE
+Branch: goal/ph-launch-assets-a1b2c3
+Iterations: 6
+Completed: 2026-08-05T15:39:00Z
+
+Deliverables:
+- plans/product-hunt-launch-copy.md — PH copy (tagline 59ch, description 412ch, 3 tags, 3 shoutouts, first comment, FAQ)
+- tools/render_agent_demo.py — extended with 'full' narrative clip + thumbnail + gallery generators (Canvas refactor to 1270x760)
+- public/agent-demos/full.gif — 1270x760 narrative demo (~30s, 52KB), plus full.mp4/webm/png
+- public/agent-demos/thumbnail.png — 240x240
+- public/agent-demos/gallery-1..6.png — 6 frames @1270x760
+- public/demo.gif — replaced with the narrative GIF (Demo component shows it, no src edits)
+
+Criteria: all 5 passed (copy doc, full.gif size/dims, thumbnail dims, gallery count>=5, npm run build).
+Negative knowledge: FULL_PHASES steps must be flat _line list, not nested like CLIPS.

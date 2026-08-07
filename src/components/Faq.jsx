@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { Reveal } from './motion.jsx'
 
 const FAQS = [
@@ -32,6 +32,11 @@ const FAQS = [
     id: 'faq-podman',
     q: 'Is Podman supported?',
     a: 'Yes — Niki is Podman-first. It auto-detects the rootless Podman socket (no daemon, no root), then rootful Podman, then Docker. Verified end-to-end on Ubuntu 24.04 with Podman 4.9.3: image build, container lifecycle, and bind mounts all pass.',
+  },
+  {
+    id: 'faq-install',
+    q: 'How do I install Niki?',
+    a: 'Today you clone the repo and run cargo build --release (Rust 2024 edition). Prebuilt binaries for x86_64 Linux, ARM64 Linux, x86_64 Windows, x86_64 macOS, and Apple Silicon macOS are on the way via GitHub Releases, alongside a shell installer, a PowerShell installer, winget/Scoop, a Homebrew tap, and cargo install niki.',
   },
 ]
 
@@ -69,7 +74,7 @@ export default function Faq() {
               </button>
               <AnimatePresence initial={false}>
                 {isOpen && (
-                  <motion.div
+                  <m.div
                     id={`faq-body-${f.id}`}
                     role="region"
                     aria-labelledby={`faq-q-${f.id}`}
@@ -81,7 +86,7 @@ export default function Faq() {
                     style={{ overflow: 'hidden' }}
                   >
                     <div className="faq-body">{f.a}</div>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>

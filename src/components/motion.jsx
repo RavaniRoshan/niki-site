@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 
 const EASE = [0.22, 1, 0.36, 1]
 
@@ -15,7 +15,7 @@ export function Reveal({
   ...rest
 }) {
   const reduce = useReducedMotion()
-  const Comp = motion[as] || motion.div
+  const Comp = m[as] || m.div
   const hidden = { opacity: 0, y: reduce ? 0 : y }
   const show = {
     opacity: 1,
@@ -40,7 +40,7 @@ const container = (reduce) => ({
 // (or on load, for the hero).
 export function Stagger({ children, as = 'div', className, onLoad = false, amount = 0.15, ...rest }) {
   const reduce = useReducedMotion()
-  const Comp = motion[as] || motion.div
+  const Comp = m[as] || m.div
   const common = { className, variants: container(reduce), initial: 'hidden', ...rest }
   if (onLoad) return <Comp {...common} animate="show">{children}</Comp>
   return (
@@ -52,7 +52,7 @@ export function Stagger({ children, as = 'div', className, onLoad = false, amoun
 
 export function StaggerItem({ children, as = 'div', className, y = 14, ...rest }) {
   const reduce = useReducedMotion()
-  const Comp = motion[as] || motion.div
+  const Comp = m[as] || m.div
   return (
     <Comp
       className={className}

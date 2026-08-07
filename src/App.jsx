@@ -1,7 +1,6 @@
 import TopNav from './components/TopNav.jsx'
 import Hero from './components/Hero.jsx'
 import WhatIsNiki from './components/WhatIsNiki.jsx'
-import Demo from './components/Demo.jsx'
 import HowItWorks from './components/HowItWorks.jsx'
 import Compare from './components/Compare.jsx'
 import Install from './components/Install.jsx'
@@ -28,7 +27,6 @@ export default function App() {
         <a id="top" aria-hidden="true" tabIndex={-1} />
         <Hero />
         <WhatIsNiki />
-        <Demo />
         <HowItWorks />
         <Compare />
         <Install />

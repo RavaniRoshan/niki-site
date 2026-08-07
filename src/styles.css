@@ -45,12 +45,28 @@
   --radius: 4px;
 }
 
+/* ── breakpoint system ──
+   Two breakpoints drive all responsive rules:
+     ≤ 850px  : tablet / large phone  (--bp-md)
+     ≤ 640px  : phone                (--bp-sm)
+   The FeatureScroller two-column layout opts in at >= 851px.
+   Keep every responsive rule on one of these two widths. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
 /* Eased, anchor-aware scrolling — but never for reduced-motion users, who get
    instant jumps. scroll-padding-top keeps targets clear of the fixed nav. */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+}
+/* On touch devices, let vertical page scroll win when a finger starts over a
+   horizontal scroller — only pass horizontal gestures to the element itself. */
+@media (max-width: 919px) {
+  .fs-nav-list,
+  .tabs,
+  .install-snippet code,
+  .tui-ascii {
+    touch-action: pan-y;
+  }
 }
 body {
   margin: 0;
@@ -88,10 +104,24 @@ strong { font-weight: 500; }
   border-top: 1px solid var(--border);
 }
 @media (max-width: 850px) {
+  :root { --gutter: 20px; }
   .section { padding-block: 64px; }
 }
 @media (max-width: 640px) {
+  :root { --gutter: 16px; }
   .section { padding-block: 48px; }
+  /* Restore h2 hierarchy on phones: body is 16px, so headings need to stand
+     out instead of reading like another paragraph. */
+  .heading { font-size: 20px; line-height: 1.35; }
+  .display { line-height: 1.2; }
+}
+
+/* Long monospace tokens (env vars, agent chains) must wrap, never force
+   horizontal page scroll. */
+.body, .body-strong, .caption, .heading,
+.fs-card-text, .hiw-card-text, .faq-body, .wl-field {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .display {
@@ -136,11 +166,20 @@ strong { font-weight: 500; }
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: 0;
-  white-space: pre;
   color: var(--fg);
   user-select: none;
   cursor: pointer;
   transition: color 160ms ease, text-shadow 160ms ease, transform 160ms ease;
+}
+.wordmark-art {
+  display: block;
+  white-space: pre;
+}
+.wordmark-text {
+  display: none;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 700;
 }
 .wordmark:hover,
 .wordmark:focus-visible {
@@ -172,7 +211,7 @@ strong { font-weight: 500; }
 .topnav-links a:active { color: var(--muted); }
 .topnav-links .count { color: var(--muted); font-weight: 400; }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .topnav-links { display: none; }
   .nav-toggle { display: inline-flex !important; }
 }
@@ -180,12 +219,26 @@ strong { font-weight: 500; }
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius);
   font-size: 14px;
   font-weight: 500;
+}
+.topnav-inner > * { min-width: 0; }
+.topnav-actions { min-width: 0; }
+@media (max-width: 480px) {
+  .theme-toggle-label { display: none; }
+  .topnav-inner { gap: 8px; padding-inline: var(--gutter); }
+}
+@media (max-width: 850px) {
+  body { padding-top: 60px; }
+  html { scroll-padding-top: 72px; }
+  /* Compact single-line wordmark on tablet/phone so the fixed nav stays short
+     (the 6-line ASCII mark would otherwise make it ~100px tall). */
+  .wordmark-art { display: none; }
+  .wordmark-text { display: inline; }
 }
 .topnav.is-open .topnav-links {
   display: flex;
@@ -310,7 +363,11 @@ strong { font-weight: 500; }
   display: flex;
   gap: 0;
   border-bottom: 1px solid var(--hairline-strong);
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none;
 }
+.tabs::-webkit-scrollbar { display: none; }
 .tab {
   padding: 8px 16px;
   font-size: 16px;
@@ -343,6 +400,14 @@ strong { font-weight: 500; }
   font-family: inherit;
   white-space: nowrap;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .install-snippet code {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
 }
 .copy-btn {
   flex-shrink: 0;
@@ -352,7 +417,9 @@ strong { font-weight: 500; }
   padding: 4px 8px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  min-height: 32px;
+  min-height: 40px;
+  min-width: 92px;
+  text-align: center;
 }
 .copy-btn:active { color: var(--fg); background: var(--surface-soft); }
 
@@ -470,13 +537,18 @@ strong { font-weight: 500; }
   font-size: 14px;
   padding-bottom: 16px;
 }
-.ds-table td:first-child { color: var(--fg); font-weight: 500; width: 28%; }
+.ds-table td:first-child { color: var(--fg); font-weight: 500; width: 28%; padding-right: 16px; }
 .ds-table td:nth-child(2) { color: var(--body); width: 36%; padding-right: 16px; }
 .ds-table td:nth-child(3) { color: var(--fg); width: 36%; }
 .ds-table tbody tr { transition: background-color 200ms ease; }
 .ds-table tbody tr:hover { background: var(--surface-soft); }
 @media (max-width: 640px) {
-  .ds-table, .ds-table thead, .ds-table tbody, .ds-table tr, .ds-table th, .ds-table td {
+  .ds-table,
+  .ds-table thead,
+  .ds-table tbody,
+  .ds-table tr,
+  .ds-table th,
+  .ds-table td {
     display: block;
     width: 100%;
   }
@@ -488,16 +560,63 @@ strong { font-weight: 500; }
   .ds-table td {
     border: 0;
     padding: 4px 0;
+    padding-right: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
-  .ds-table td:nth-child(2)::before {
+  .compare-table td:nth-child(2)::before {
     content: "Single-agent · ";
     color: var(--muted);
   }
-  .ds-table td:nth-child(3)::before {
+  .compare-table td:nth-child(3)::before {
     content: "Niki · ";
     color: var(--muted);
     font-weight: 500;
   }
+}
+
+/* ── install (per-platform distribution) ── */
+.install-step { margin-top: 32px; }
+.install-step-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.install-method-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.install-method-platform { font-size: 14px; color: var(--muted); }
+.install-note {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 60ch;
+}
+.install-snippet + .install-snippet { margin-top: 8px; }
+.install-snippet.is-soon { opacity: 0.72; }
+.copy-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* matrix table: 3 columns, long commands must wrap */
+.install-table td:first-child  { width: 22%; }
+.install-table td:nth-child(2) { width: 56%; }
+.install-table td:nth-child(3) { width: 22%; }
+.install-table code {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  color: var(--body);
+}
+.install-table code + code { display: block; margin-top: 6px; }
+
+@media (max-width: 640px) {
+  .install-table td:nth-child(2)::before { content: ""; }
+  .install-table td:first-child { font-weight: 500; color: var(--fg); }
 }
 
 /* ── pipeline ── */
@@ -550,47 +669,6 @@ strong { font-weight: 500; }
   .pipe-cell:last-child { border-bottom: 0; }
 }
 
-/* ── demo ── */
-.demo-frame {
-  margin: 0;
-  background: var(--surface-dark);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.demo-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 36px;
-  padding: 0 12px;
-  background: var(--surface-dark-elevated);
-  border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 12%, transparent);
-}
-.demo-dots {
-  display: inline-flex;
-  gap: 6px;
-}
-.demo-dots .dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--on-dark) 26%, transparent);
-}
-.demo-title {
-  font-size: 14px;
-  line-height: 2;
-  color: var(--ash);
-  margin-left: auto;
-  margin-right: auto;
-}
-.demo-gif {
-  display: block;
-  width: 100%;
-  height: auto;
-  background: var(--surface-dark);
-}
-
 /* ── two col ── */
 .split {
   display: grid;
@@ -623,7 +701,8 @@ strong { font-weight: 500; }
 }
 .producthunt-badge img {
   width: 250px;
-  height: 54px;
+  max-width: 100%;
+  height: auto;
 }
 @media (max-width: 640px) {
   .producthunt-card { align-items: flex-start; }
@@ -670,11 +749,15 @@ strong { font-weight: 500; }
     border-bottom: 1px solid var(--border);
   }
   .foot-links a:nth-child(2n) { border-right: 0; }
-  .foot-links a:nth-last-child(-n+1) { border-bottom: 0; }
+  .foot-links a:nth-last-child(-n+2) { border-bottom: 0; }
 }
 @media (max-width: 640px) {
   .foot-links { grid-template-columns: 1fr; }
   .foot-links a { border-right: 0; text-align: left; padding-inline: 12px; }
+  .faq-body { padding-left: 16px; }
+}
+@media (max-width: 850px) and (min-width: 641px) {
+  .fs-card-media { height: 260px; }
 }
 
 .stack-lg > * + * { margin-top: 16px; }
@@ -688,15 +771,20 @@ strong { font-weight: 500; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 12px;
-  border: 1px solid var(--hairline-strong);
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fg);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 200ms ease, opacity 200ms ease;
 }
-.theme-toggle:active { background: var(--surface-soft); }
+.theme-toggle:hover { opacity: 0.7; }
+.theme-toggle:active { transform: scale(0.88); }
 
 /* ── dark theme ── */
 [data-theme='dark'] {
@@ -802,6 +890,9 @@ strong { font-weight: 500; }
   .tiers { grid-template-columns: 1fr; }
   .tier + .tier { border-left: 0; border-top: 1px solid var(--border); }
 }
+@media (max-width: 640px) {
+  .tier-cta .btn { width: 100%; }
+}
 
 /* ── waitlist form ── */
 .wl-form { display: flex; flex-direction: column; gap: 20px; max-width: 620px; }
@@ -839,9 +930,11 @@ strong { font-weight: 500; }
 .wl-seg-field { gap: 12px; }
 .wl-seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .wl-seg-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-height: 48px;
   padding: 12px;
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius);
@@ -850,6 +943,11 @@ strong { font-weight: 500; }
   transition: border-color 160ms ease, background-color 160ms ease;
 }
 .wl-seg-card:hover { border-color: var(--fg); }
+.wl-seg-card:focus-visible {
+  outline: none;
+  border-color: var(--tui-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--tui-accent) 45%, transparent);
+}
 .wl-seg-card.is-checked {
   border-color: var(--tui-accent);
   box-shadow: inset 0 0 0 1px var(--tui-accent);
@@ -861,6 +959,9 @@ strong { font-weight: 500; }
 
 .wl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .wl-field-grow { min-width: 0; }
+@media (max-width: 850px) and (min-width: 641px) {
+  .wl-seg { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 640px) {
   .wl-seg { grid-template-columns: 1fr; }
   .wl-row { grid-template-columns: 1fr; }
@@ -971,13 +1072,21 @@ strong { font-weight: 500; }
 
 @media (max-width: 919px) {
   .fs-nav { position: static; margin-bottom: 8px; }
-  .fs-nav-list { flex-direction: row; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .fs-nav-list {
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
   .fs-nav-item {
     flex: none;
     width: auto;
     border-left: 0;
     border-bottom: 2px solid transparent;
     padding: 10px 12px;
+    scroll-snap-align: start;
   }
   .fs-nav-item.is-active { border-left: 0; border-bottom-color: var(--tui-accent); }
 }
@@ -1001,7 +1110,8 @@ strong { font-weight: 500; }
 .hiw-pause {
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 10px 16px;
+  min-height: 40px;
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius);
   background: var(--bg);
@@ -1023,6 +1133,9 @@ strong { font-weight: 500; }
   margin-top: 28px;
   align-items: stretch;
 }
+@media (max-width: 850px) {
+  .hiw-grid { grid-template-columns: 1fr; }
+}
 .hiw-card {
   display: flex;
   flex-direction: column;
@@ -1033,14 +1146,15 @@ strong { font-weight: 500; }
 }
 .hiw-card-media {
   position: relative;
-  height: 280px;
+  aspect-ratio: 16 / 10;
   background: var(--surface-dark);
   overflow: hidden;
   flex: none;
 }
 
-/* The demo clip fills the media band. Slight opacity at rest, full on
-   hover/focus, so the looping GIF/video feels calm and never harsh. */
+/* The demo clip fills the media band. On HIW cards the 16/10 band matches the
+   1200x750 (1.6) source so `contain` shows the full terminal frame with no
+   cropping. FeatureScroller cards keep `cover` (full-bleed) — see below. */
 .hiw-clip-media {
   position: absolute;
   inset: 0;
@@ -1051,6 +1165,7 @@ strong { font-weight: 500; }
   opacity: 0.92;
   transition: opacity 0.4s ease;
 }
+.hiw-card .hiw-clip-media { object-fit: contain; }
 .hiw-card:hover .hiw-clip-media,
 .hiw-card:focus-within .hiw-clip-media,
 .fs-card:hover .hiw-clip-media,
@@ -1089,9 +1204,6 @@ strong { font-weight: 500; }
   padding: 1px 5px;
 }
 
-@media (max-width: 850px) {
-  .hiw-card-media { height: 240px; }
-}
 @media (prefers-reduced-motion: reduce) {
   .hiw-clip-media { transition: none; }
 }

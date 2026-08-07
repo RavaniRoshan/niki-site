@@ -33,6 +33,7 @@ const AGENTS = [
 export default function FeatureScroller({ motionOk, paused }) {
   const [active, setActive] = useState(0)
   const cardRefs = useRef([])
+  const navRefs = useRef([])
 
   // Scroll-spy: the card centred in the viewport becomes the active step.
   useEffect(() => {
@@ -51,6 +52,19 @@ export default function FeatureScroller({ motionOk, paused }) {
     return () => io.disconnect()
   }, [])
 
+  // When the active step changes, keep its tab visible in the (mobile)
+  // horizontal scroller by scrolling it into view. On desktop the nav is a
+  // sticky vertical list, so we skip this to avoid scroll jank.
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 919px)').matches) return
+    const el = navRefs.current[active]
+    if (!el || typeof el.scrollIntoView !== 'function') return
+    const rect = el.getBoundingClientRect()
+    const inViewVertically = rect.top >= 0 && rect.bottom <= window.innerHeight
+    if (!inViewVertically) return
+    el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+  }, [active])
+
   const goTo = (i) => {
     const el = cardRefs.current[i]
     if (!el) return
@@ -66,6 +80,7 @@ export default function FeatureScroller({ motionOk, paused }) {
             <li key={a.key}>
               <button
                 type="button"
+                ref={(el) => (navRefs.current[i] = el)}
                 className={`fs-nav-item${i === active ? ' is-active' : ''}`}
                 aria-current={i === active ? 'true' : undefined}
                 onClick={() => goTo(i)}

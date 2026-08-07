@@ -58,9 +58,11 @@
             "@type": "SoftwareApplication",
             "@id": "https://niki.ai/#software",
             "name": "Niki",
-            "applicationCategory": "DeveloperApplication",
+               "applicationCategory": "DeveloperApplication",
             "operatingSystem": "Linux, macOS, Windows",
             "url": "https://niki.ai/",
+            "downloadUrl": "https://github.com/RavaniRoshan/niki/releases",
+            "softwareRequirements": "Rust 2024 edition; Podman or Docker",
             "description": "Niki splits software work across isolated Planner, Coder, Tester, and Reviewer agents, runs inside a sandbox, and produces reviewable pull request branches.",
             "publisher": { "@id": "https://niki.ai/#organization" },
             "offers": {
@@ -95,6 +97,14 @@
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Yes. Teams can assign provider and model per agent, such as a stronger reasoning model for planning and review and a lower-cost model for testing."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I install Niki?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Today you clone the repo and run cargo build --release (Rust 2024 edition). Prebuilt binaries for x86_64 Linux, ARM64 Linux, x86_64 Windows, x86_64 macOS, and Apple Silicon macOS are on the way via GitHub Releases, alongside a shell installer, a PowerShell installer, winget/Scoop, a Homebrew tap, and cargo install niki."
                 }
               }
             ]

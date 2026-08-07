@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { PixelGrid } from '../components/ui/pixel-grid'
 import { useTheme } from '../theme.jsx'
 import { Reveal, Stagger, StaggerItem } from './motion.jsx'
@@ -62,7 +62,7 @@ export default function Hero() {
         </StaggerItem>
         <StaggerItem>
           <div className="hero-cta">
-            <motion.a
+            <m.a
               className="btn btn-primary"
               data-od-id="hero-cta"
               href={GITHUB_URL}
@@ -73,8 +73,8 @@ export default function Hero() {
               transition={{ duration: 0.18 }}
             >
               View on GitHub
-            </motion.a>
-            <motion.a
+            </m.a>
+            <m.a
               className="btn btn-secondary"
               href="#start"
               whileHover={{ y: -1 }}
@@ -82,7 +82,7 @@ export default function Hero() {
               transition={{ duration: 0.18 }}
             >
               Install
-            </motion.a>
+            </m.a>
           </div>
         </StaggerItem>
       </Stagger>

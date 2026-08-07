@@ -92,14 +92,16 @@ export default function LogoWordmark({
   if (as === 'a') {
     return (
       <a href={href} {...commonProps}>
-        {logoText}
+        <span className="wordmark-art" aria-hidden="true">{logoText}</span>
+        <span className="wordmark-text">Niki</span>
       </a>
     )
   }
 
   return (
     <div {...commonProps} tabIndex={0} role="img">
-      {logoText}
+      <span className="wordmark-art" aria-hidden="true">{logoText}</span>
+      <span className="wordmark-text">Niki</span>
     </div>
   )
 }

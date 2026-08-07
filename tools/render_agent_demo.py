@@ -273,27 +273,33 @@ PH = Canvas(1270, 760, FONT_REG, FONT_BOLD, FONT_BAR, 30, 64, 30)
 def draw_frame(canvas, revealed, artifact, cursor_on=True):
     img = Image.new("RGB", (canvas.w, canvas.h), BG)
     d = ImageDraw.Draw(img)
-    # top bar
-    d.rectangle([0, 0, canvas.w, 36], fill=BAR)
-    for i, (cx, col) in enumerate([(22, "#ff5f56"), (38, "#ffbd2e"), (54, "#27c93f")]):
-        d.ellipse([cx - 5, 13, cx + 5, 23], fill=col)
-    d.text((canvas.w - 24, 11), "niki · session", font=canvas.bar, fill=ASH, anchor="ra")
-    # body
+
+    # --- compute scroll offset so latest content stays visible ---
+    text_h = len(revealed) * canvas.lh
+    artifact_h = 0
+    if artifact:
+        artifact_h = 8 + 16 + canvas.lh * (len(artifact["lines"]) + 1)
+    total_h = text_h + artifact_h
+    visible_bottom = canvas.h
+    scroll = max(0, canvas.y0 + total_h - visible_bottom)
+
+    # --- body (drawn first so top bar clips overflow) ---
     y = canvas.y0
-    last = revealed[-1] if revealed else ("", "txt")
     for i, (text, color) in enumerate(revealed):
-        is_last = i == len(revealed) - 1
-        d.text((canvas.x0, y), text, font=canvas.reg, fill=C.get(color, TXT))
-        if is_last and cursor_on:
+        draw_y = y - scroll
+        d.text((canvas.x0, draw_y), text, font=canvas.reg, fill=C.get(color, TXT))
+        if i == len(revealed) - 1 and cursor_on:
             tw = canvas.reg.getlength(text)
-            d.rectangle([canvas.x0 + tw + 2, y + 3, canvas.x0 + tw + 9, y + 18], fill=C.get(color, TXT))
+            d.rectangle([canvas.x0 + tw + 2, draw_y + 3, canvas.x0 + tw + 9, draw_y + 18],
+                        fill=C.get(color, TXT))
         y += canvas.lh
-    # artifact box
+
     if artifact:
         y += 8
         lines = artifact["lines"]
         box_h = 16 + canvas.lh * (len(lines) + 1)
-        bx, by, bw = canvas.x0, y, canvas.w - 2 * canvas.x0
+        bx, bw = canvas.x0, canvas.w - 2 * canvas.x0
+        by = y - scroll
         d.rounded_rectangle([bx, by, bx + bw, by + box_h], radius=6,
                             outline=BORDER, width=1)
         d.text((bx + 14, by + 12), artifact["title"], font=canvas.bold,
@@ -304,6 +310,13 @@ def draw_frame(canvas, revealed, artifact, cursor_on=True):
             color = ln.get("c") if isinstance(ln, dict) else ln[1]
             d.text((bx + 14, ly), text, font=canvas.reg, fill=C.get(color, TXT))
             ly += canvas.lh
+
+    # --- top bar drawn LAST to clip any overflow above y=36 ---
+    d.rectangle([0, 0, canvas.w, 36], fill=BAR)
+    for i, (cx, col) in enumerate([(22, "#ff5f56"), (38, "#ffbd2e"), (54, "#27c93f")]):
+        d.ellipse([cx - 5, 13, cx + 5, 23], fill=col)
+    d.text((canvas.w - 24, 11), "niki · session", font=canvas.bar, fill=ASH, anchor="ra")
+
     return img
 
 
@@ -362,10 +375,11 @@ def build_full_frames(canvas):
     return snaps
 
 
-def encode(key, frame_files, poster_file):
-    mp4 = os.path.join(OUT_DIR, f"{key}.mp4")
-    webm = os.path.join(OUT_DIR, f"{key}.webm")
-    gif = os.path.join(OUT_DIR, f"{key}.gif")
+def encode(key, frame_files, poster_file, out_dir=None):
+    out_dir = out_dir or OUT_DIR
+    mp4 = os.path.join(out_dir, f"{key}.mp4")
+    webm = os.path.join(out_dir, f"{key}.webm")
+    gif = os.path.join(out_dir, f"{key}.gif")
     tmp_gif = os.path.join(FRAMES_DIR, f"{key}_pillow.gif")
     ffmpeg = shutil.which("ffmpeg")
     gifsicle = os.path.join(REPO, "node_modules", "gifsicle", "vendor", "gifsicle")
@@ -390,11 +404,13 @@ def encode(key, frame_files, poster_file):
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if os.path.exists(tmp_gif):
         os.remove(tmp_gif)
-    shutil.copy(poster_file, os.path.join(OUT_DIR, f"{key}.png"))
+    shutil.copy(poster_file, os.path.join(out_dir, f"{key}.png"))
     return gif
 
 
 def render(key, spec, canvas=CANON):
+    agents_dir = os.path.join(OUT_DIR, "agents")
+    os.makedirs(agents_dir, exist_ok=True)
     snaps = build_frames(canvas, spec)
     os.makedirs(FRAMES_DIR, exist_ok=True)
     files = []
@@ -409,7 +425,7 @@ def render(key, spec, canvas=CANON):
             poster_src = f
     if poster_src is None:
         poster_src = files[len(files) // 2]
-    gif = encode(key, files, poster_src)
+    gif = encode(key, files, poster_src, out_dir=agents_dir)
     for f in files:
         os.remove(f)
     size = os.path.getsize(gif)

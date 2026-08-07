@@ -63,7 +63,11 @@ export function PixelGrid({
     //    overflow:hidden actually clips it to the hero/brand box;
     //  - cap the draw rate to ~20fps (pixels fade slowly — 60 is wasted);
     //  - pause the rAF loop entirely when offscreen or tab-hidden.
-    const FRAME_MS = 1000 / 20
+    const FRAME_MS =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 850px)").matches
+        ? 1000 / 12
+        : 1000 / 20
     let rafId: number | null = null
     let running = false
     let inView = false
