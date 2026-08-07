@@ -1,4 +1,5 @@
 import { m } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { PixelGrid } from '../components/ui/pixel-grid'
 import { useTheme } from '../theme.jsx'
 import { Reveal, Stagger, StaggerItem } from './motion.jsx'
@@ -74,6 +75,13 @@ export default function Hero() {
             >
               View on GitHub
             </m.a>
+            <Link
+              className="btn btn-secondary"
+              to="/downloads"
+              data-od-id="hero-downloads"
+            >
+              Downloads ↓
+            </Link>
             <m.a
               className="btn btn-secondary"
               href="#start"
