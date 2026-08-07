@@ -18,11 +18,11 @@ export default function TopNav() {
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
-          <Link to="/#start">Install</Link>
+          <Link to="/downloads">Downloads</Link>
           <Link to="/waitlist">Waitlist</Link>
           <Link to="/#faq">FAQ</Link>
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="topnav-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button
             type="button"
             className="theme-toggle"
@@ -30,7 +30,7 @@ export default function TopNav() {
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             onClick={toggle}
           >
-            {theme === 'dark' ? '☀ Light' : '☾ Dark'}
+            {theme === 'dark' ? '☀' : '☾'}
           </button>
           <button
             type="button"

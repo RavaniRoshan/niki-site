@@ -61,8 +61,9 @@ export default function Waitlist() {
     setErrors(next)
     if (next.email && emailRef.current) emailRef.current.focus()
     else if (next.segment) {
-      const el = document.getElementById('seg-' + SEGMENTS[0])
-      if (el) el.focus()
+      const radio = document.getElementById('seg-' + SEGMENTS[0])
+      const card = radio && radio.closest('.wl-seg-card')
+      if (card) card.focus()
     }
     return Object.keys(next).length === 0
   }
@@ -189,6 +190,7 @@ export default function Waitlist() {
                       key={value}
                       htmlFor={id}
                       className={`wl-seg-card${checked ? ' is-checked' : ''}`}
+                      tabIndex={-1}
                     >
                       <input
                         id={id}

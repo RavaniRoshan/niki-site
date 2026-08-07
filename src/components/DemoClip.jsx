@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 
 export function media(key) {
   return {
-    mp4: `/agent-demos/${key}.mp4`,
-    webm: `/agent-demos/${key}.webm`,
-    gif: `/agent-demos/${key}.gif`,
-    poster: `/agent-demos/${key}.png`,
+    mp4: `/agent-demos/agents/${key}.mp4`,
+    webm: `/agent-demos/agents/${key}.webm`,
+    gif: `/agent-demos/agents/${key}.gif`,
+    poster: `/agent-demos/agents/${key}.png`,
   }
 }
 

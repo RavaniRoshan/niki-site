@@ -18,7 +18,7 @@ export default function Compare() {
           Open source. Rust CLI. Runs where Podman or Docker does. Fire-and-forget, then review like any human
           PR.
         </p>
-        <table className="ds-table" data-od-id="compare-table">
+        <table className="ds-table compare-table" data-od-id="compare-table">
           <thead>
             <tr>
               <th>Capability</th>

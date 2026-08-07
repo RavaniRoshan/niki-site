@@ -68,7 +68,7 @@ export default function HowItWorks() {
               Show animations
             </button>
           )}
-          <span className="caption">Looping demos. Pause to stop them all; click a step on the left to jump to it.</span>
+          <span className="caption">Looping demos. Pause to stop them all; tap a step above to jump to it.</span>
         </div>
 
         <Reveal className="hiw-optin" data-od-id="hiw-optin">

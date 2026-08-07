@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   BrowserRouter,
@@ -6,8 +6,10 @@ import {
   Route,
   useLocation,
 } from 'react-router-dom'
+import { LazyMotion, domMax } from 'framer-motion'
 import App from './App.jsx'
-import WaitlistPage from './components/WaitlistPage.jsx'
+const WaitlistPage = React.lazy(() => import('./components/WaitlistPage.jsx'))
+const DownloadsPage = React.lazy(() => import('./components/DownloadsPage.jsx'))
 import { ThemeProvider } from './theme.jsx'
 import SiteAnalytics from './analytics.jsx'
 import './tailwind.css'
@@ -34,12 +36,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
       <BrowserRouter>
-        <ScrollManager />
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/waitlist" element={<WaitlistPage />} />
-        </Routes>
-        <SiteAnalytics />
+        <LazyMotion features={domMax} strict>
+          <ScrollManager />
+          <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+            <Routes>
+              <Route path="/" element={<App />} />
+              <Route path="/waitlist" element={<WaitlistPage />} />
+              <Route path="/downloads" element={<DownloadsPage />} />
+            </Routes>
+          </Suspense>
+          <SiteAnalytics />
+        </LazyMotion>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,
