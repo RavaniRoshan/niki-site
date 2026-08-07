@@ -81,6 +81,22 @@ export default function Install() {
           Install Niki in seconds. Prebuilt binaries for every platform, or build from source.
         </p>
 
+        <div className="hero-cta mb-xl">
+          <Link
+            className="btn btn-primary"
+            to="/downloads"
+            data-od-id="install-downloads-btn"
+          >
+            Downloads
+          </Link>
+          <a
+            className="btn btn-secondary"
+            href="#start"
+          >
+            Install from source
+          </a>
+        </div>
+
         <div className="install-step">
           <div className="install-step-title">1 — Get the binary</div>
           <div className="stack-lg">

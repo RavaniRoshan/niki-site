@@ -18,7 +18,6 @@ export default function TopNav() {
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
-          <Link to="/#start">Install</Link>
           <Link to="/downloads">Downloads</Link>
           <Link to="/waitlist">Waitlist</Link>
           <Link to="/#faq">FAQ</Link>
