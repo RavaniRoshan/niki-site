@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { PixelGrid } from '../components/ui/pixel-grid'
 import { useTheme } from '../theme.jsx'
 import { Reveal, Stagger, StaggerItem } from './motion.jsx'
+import { track } from '../analytics.jsx'
 
 const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
 
@@ -72,6 +73,7 @@ export default function Hero() {
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.18 }}
+              onClick={() => track('hero_cta_github')}
             >
               View on GitHub
             </m.a>
@@ -79,6 +81,7 @@ export default function Hero() {
               className="btn btn-secondary"
               to="/downloads"
               data-od-id="hero-downloads"
+              onClick={() => track('hero_cta_downloads')}
             >
               Downloads ↓
             </Link>
@@ -88,6 +91,7 @@ export default function Hero() {
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.18 }}
+              onClick={() => track('hero_cta_install')}
             >
               Install
             </m.a>
@@ -106,7 +110,7 @@ export default function Hero() {
             <span className="tok">podman</span>
           </div>
           <div className="tui-log" data-od-id="tui-log" aria-live="polite">
-            <div className="dim">$ niki run "Add a GET /health endpoint" --project ./my-app</div>
+            <div className="dim">$ niki run &quot;Add a GET /health endpoint&quot; --project ./my-app</div>
             <div><span className="info">◈ Planner</span>  <span className="ok">TaskSpec ready</span></div>
             <div className="dim">  files: src/routes/health.ts · tests/health.test.ts</div>
             <div><span className="info">⟠ Coder</span>   <span className="ok">unified diff applied</span></div>

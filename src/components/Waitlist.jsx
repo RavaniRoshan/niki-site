@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useForm } from '@formspree/react'
 import { track } from '@vercel/analytics'
 import { Reveal } from './motion.jsx'
@@ -8,6 +8,7 @@ import {
   SEGMENT_SELF_HOSTED,
   SEGMENT_MANAGED_CLOUD,
 } from '../lib/waitlist.js'
+import { captureUtm, getUtm, isPhReferral } from '../lib/utm.js'
 
 // Formspree form id. Override without editing code via VITE_WAITLIST_FORM
 // (e.g. in .env.local). The id is client-side by design — the browser
@@ -32,6 +33,7 @@ export default function Waitlist() {
   const [teamSize, setTeamSize] = useState('')
   const [stack, setStack] = useState('')
   const [gotcha, setGotcha] = useState('')
+  const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState({})
   const emailRef = useRef(null)
 
@@ -58,6 +60,7 @@ export default function Waitlist() {
     const next = {}
     if (!EMAIL_RE.test(email.trim())) next.email = 'Enter a valid email address.'
     if (!segment) next.segment = 'Pick how you expect to run NIKI.'
+    if (!consent) next.consent = 'Please consent to being contacted.'
     setErrors(next)
     if (next.email && emailRef.current) emailRef.current.focus()
     else if (next.segment) {
@@ -88,6 +91,10 @@ export default function Waitlist() {
   }
 
   useEffect(() => {
+    captureUtm()
+    if (isPhReferral()) {
+      track('ph_referral')
+    }
     track('waitlist_viewed')
   }, [])
 
@@ -111,24 +118,27 @@ export default function Waitlist() {
   return (
     <section className="section" data-od-id="waitlist" id="waitlist">
       <Reveal className="container">
-        <h2 className="heading mb-lg">Private beta — join the waitlist</h2>
+        <h2 className="heading mb-lg">Self-hosted is ready. The waitlist is for the cloud beta.</h2>
         <p className="body mb-xl" style={{ maxWidth: '56ch' }}>
-          NIKI is a prototype and access is invite-based. Leave your email and tell us how
-          you expect to run it — we'll reach out as slots open. No spam, and cloud isn't
-          required to get value.
+          Self-hosted Niki is available now — clone, build, and run. The waitlist opens access
+          to the managed cloud beta and launch-day updates; no spam.
         </p>
 
         {succeeded ? (
           <div className="wl-success" data-od-id="wl-success" role="status">
-            <h3 className="body-strong mb-lg">You're on the list.</h3>
+            <h3 className="body-strong mb-lg">You&apos;re on the list.</h3>
             <p className="body" style={{ maxWidth: '52ch' }}>
-              Thanks — we'll email you when an invite opens up. This is a private, invite-based
-              beta and NIKI is still a prototype, so expect rough edges. The more you tell us
-              about how you'll run it, the better we can prioritize.
+              Thanks — you&apos;re on the list for the cloud beta and launch-day updates.
+              Self-hosted Niki is available now if you want to try it today.
             </p>
           </div>
         ) : (
           <form className="wl-form" data-od-id="wl-form" onSubmit={onSubmit} noValidate>
+            {/* UTM hidden fields for attribution */}
+            <input type="hidden" name="utm_source" value={getUtm().utm_source || ''} />
+            <input type="hidden" name="utm_medium" value={getUtm().utm_medium || ''} />
+            <input type="hidden" name="utm_campaign" value={getUtm().utm_campaign || ''} />
+
             {/* honeypot — hidden from humans, bots fill it */}
             <div className="wl-gotcha" aria-hidden="true">
               <label>
@@ -259,6 +269,37 @@ export default function Waitlist() {
               </div>
             </div>
 
+            <div className="wl-field">
+              <label className="wl-consent" htmlFor="wl-consent">
+                <input
+                  id="wl-consent"
+                  name="consent"
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => {
+                    setConsent(e.target.checked)
+                    if (errors.consent) setErrors((p) => ({ ...p, consent: undefined }))
+                  }}
+                  aria-required="true"
+                  aria-invalid={errors.consent ? 'true' : 'false'}
+                  aria-describedby={errors.consent ? 'wl-consent-err' : undefined}
+                  data-od-id="wl-consent"
+                />
+                <span>
+                  I agree to be contacted about Niki updates. See the{' '}
+                  <Link className="ink" to="/privacy" data-od-id="wl-privacy-link">
+                    privacy policy
+                  </Link>
+                  .
+                </span>
+              </label>
+              {errors.consent && (
+                <p className="wl-error" id="wl-consent-err" role="alert">
+                  {errors.consent}
+                </p>
+              )}
+            </div>
+
             {serverErrors && (
               <p className="wl-error wl-form-error" role="alert">
                 {serverMessage}
@@ -275,7 +316,11 @@ export default function Waitlist() {
                 {submitting ? 'Joining…' : 'Join waitlist'}
               </button>
               <p className="caption wl-fineprint">
-                Invite-based · prototype status · we'll only email you about NIKI.
+                We&apos;ll only email you about Niki. See our{' '}
+                <Link className="ink" to="/privacy" data-od-id="wl-fineprint-privacy">
+                  privacy policy
+                </Link>
+                .
               </p>
             </div>
           </form>

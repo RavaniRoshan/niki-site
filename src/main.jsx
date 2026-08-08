@@ -10,6 +10,9 @@ import { LazyMotion, domMax } from 'framer-motion'
 import App from './App.jsx'
 const WaitlistPage = React.lazy(() => import('./components/WaitlistPage.jsx'))
 const DownloadsPage = React.lazy(() => import('./components/DownloadsPage.jsx'))
+const PrivacyPage = React.lazy(() => import('./components/PrivacyPage.jsx'))
+const ProductHuntPage = React.lazy(() => import('./components/ProductHuntPage.jsx'))
+const NotFound = React.lazy(() => import('./components/NotFound.jsx'))
 import { ThemeProvider } from './theme.jsx'
 import SiteAnalytics from './analytics.jsx'
 import './tailwind.css'
@@ -43,6 +46,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/" element={<App />} />
               <Route path="/waitlist" element={<WaitlistPage />} />
               <Route path="/downloads" element={<DownloadsPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/producthunt" element={<ProductHuntPage />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
           <SiteAnalytics />

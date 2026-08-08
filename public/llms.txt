@@ -4,8 +4,8 @@ Niki is a hermetic multi-agent AI coding system for software teams. It separates
 
 ## Canonical pages
 
-- https://niki.ai/ — product overview for Niki.
-- https://niki.ai/waitlist — private beta access request page.
+- https://niki-site.vercel.app/ — product overview for Niki.
+- https://niki-site.vercel.app/waitlist — private beta access request page.
 
 ## Product facts
 

@@ -10,32 +10,48 @@ const RELEASE_DOWNLOAD = `https://github.com/RavaniRoshan/niki/releases/download
 const RELEASE_TAG = `https://github.com/RavaniRoshan/niki/releases/tag/${RELEASE_VERSION}`
 
 const BINARIES = [
-  { platform: 'macOS Apple Silicon', arch: 'aarch64', filename: 'niki-aarch64-apple-darwin.tar.xz' },
-  { platform: 'macOS Intel', arch: 'x86_64', filename: 'niki-x86_64-apple-darwin.tar.xz' },
-  { platform: 'Windows x64', arch: 'x86_64', filename: 'niki-x86_64-pc-windows-msvc.zip' },
-  { platform: 'Linux ARM64', arch: 'aarch64', filename: 'niki-aarch64-unknown-linux-gnu.tar.xz' },
-  { platform: 'Linux x64', arch: 'x86_64', filename: 'niki-x86_64-unknown-linux-gnu.tar.xz' },
+  { platform: 'macOS Apple Silicon', arch: 'aarch64', filename: 'niki-aarch64-apple-darwin.tar.xz', available: false },
+  { platform: 'macOS Intel', arch: 'x86_64', filename: 'niki-x86_64-apple-darwin.tar.xz', available: false },
+  { platform: 'Windows x64', arch: 'x86_64', filename: 'niki-x86_64-pc-windows-msvc.zip', available: false },
+  { platform: 'Linux ARM64', arch: 'aarch64', filename: 'niki-aarch64-unknown-linux-gnu.tar.xz', available: false },
+  { platform: 'Linux x64', arch: 'x86_64', filename: 'niki-x86_64-unknown-linux-gnu.tar.xz', available: false },
 ]
 
 const INSTALLERS = [
   {
     id: 'unix',
     label: 'Linux / macOS',
-    cmd: `curl -fsSL ${RELEASE_DOWNLOAD}/niki-installer.sh | sh`,
+    cmd: `curl -fsSL https://install.niki.dev | sh`,
+    available: false,
   },
   {
     id: 'windows',
     label: 'Windows',
-    cmd: `irm ${RELEASE_DOWNLOAD}/niki-installer.ps1 | iex`,
+    cmd: `irm https://install.niki.dev | iex`,
+    available: false,
   },
 ]
 
 const PACKAGES = [
-  { label: 'Homebrew (macOS)', cmd: 'brew install ravaniroshan/tap/niki' },
-  { label: 'winget (Windows)', cmd: 'winget install niki' },
-  { label: 'Scoop (Windows)', cmd: 'scoop install niki' },
-  { label: 'Cargo (any)', cmd: 'cargo install niki' },
+  { label: 'Homebrew (macOS)', cmd: 'brew install ravaniroshan/tap/niki', available: false },
+  { label: 'winget (Windows)', cmd: 'winget install niki', available: false },
+  { label: 'Scoop (Windows)', cmd: 'scoop install niki', available: false },
+  { label: 'Cargo (any)', cmd: 'cargo install niki', available: false },
 ]
+
+const SOURCE_BUILD = {
+  label: 'Clone and build from source',
+  cmd: 'git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release',
+  available: true,
+  odId: 'downloads-source-build',
+}
+
+const GITHUB_RELEASES = {
+  label: 'GitHub Releases',
+  url: 'https://github.com/RavaniRoshan/niki/releases',
+  available: true,
+  odId: 'downloads-github-releases',
+}
 
 function Snippet({ code, odId }) {
   const [copied, setCopied] = useState(false)
@@ -74,8 +90,8 @@ export default function DownloadsPage() {
   return (
     <>
       <Seo
-        title="Union Downloads · Niki release binaries and installers"
-        description="Download Niki v0.2.0 binaries, installer scripts, and package manager commands. Available for macOS, Windows, and Linux."
+        title="Niki — Downloads"
+        description="Niki binaries, installers, and package manager commands. Self-hosted builds work today; prebuilt releases are coming soon."
         path="/downloads"
       />
       <TopNav />
@@ -85,7 +101,7 @@ export default function DownloadsPage() {
             <span className="tier-badge tier-badge-ready" style={{ marginBottom: 16, display: 'inline-block' }}>
               v0.2.0
             </span>
-            <h1 className="heading mb-lg">Union Downloads</h1>
+            <h1 className="heading mb-lg">Niki — Downloads</h1>
             <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
               All distribution assets for Niki {RELEASE_VERSION}. Direct binaries, installer scripts,
               and package manager commands for every supported platform.
@@ -114,13 +130,17 @@ export default function DownloadsPage() {
                       <code>{b.filename}</code>
                     </td>
                     <td>
-                      <a
-                        className="btn btn-primary"
-                        href={`${RELEASE_DOWNLOAD}/${b.filename}`}
-                        data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                      >
-                        Download
-                      </a>
+                      {b.available ? (
+                        <a
+                          className="btn btn-primary"
+                          href={`${RELEASE_DOWNLOAD}/${b.filename}`}
+                          data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                        >
+                          Download
+                        </a>
+                      ) : (
+                        <span className="tier-badge tier-badge-soon" data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>Coming soon</span>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -138,7 +158,11 @@ export default function DownloadsPage() {
             {INSTALLERS.map((i) => (
               <div key={i.id} className="stack-lg" style={{ marginBottom: 24 }}>
                 <span className="label">{i.label}</span>
-                <Snippet code={i.cmd} odId={`downloads-installer-${i.id}`} />
+                {i.available ? (
+                  <Snippet code={i.cmd} odId={`downloads-installer-${i.id}`} />
+                ) : (
+                  <p className="install-note" data-od-id={`downloads-installer-${i.id}`}>Coming soon</p>
+                )}
               </div>
             ))}
           </Reveal>
@@ -151,10 +175,32 @@ export default function DownloadsPage() {
               {PACKAGES.map((p) => (
                 <div key={p.label} style={{ marginBottom: 16 }}>
                   <span className="label" style={{ display: 'block', marginBottom: 8 }}>{p.label}</span>
-                  <Snippet code={p.cmd} odId={`downloads-package-${p.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`} />
+                  {p.available ? (
+                    <Snippet code={p.cmd} odId={`downloads-package-${p.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`} />
+                  ) : (
+                    <p className="install-note" data-od-id={`downloads-package-${p.label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>Coming soon</p>
+                  )}
                 </div>
               ))}
             </div>
+          </Reveal>
+        </section>
+
+        <section className="section" data-od-id="downloads-source" style={{ borderTop: '1px solid var(--border)' }}>
+          <Reveal className="container">
+            <h2 className="heading mb-lg">Build from source</h2>
+            <p className="body" style={{ maxWidth: '52ch', marginBottom: 24 }}>
+              Self-hosted Niki is available now. Clone the repo and build with Cargo — no waitlist required.
+            </p>
+            <div className="stack-lg">
+              <span className="label" style={{ display: 'block', marginBottom: 8 }}>{SOURCE_BUILD.label}</span>
+              <Snippet code={SOURCE_BUILD.cmd} odId={SOURCE_BUILD.odId} />
+            </div>
+            <p className="body" style={{ marginTop: 24 }}>
+              <a href={GITHUB_RELEASES.url} target="_blank" rel="noreferrer" className="ink" data-od-id={GITHUB_RELEASES.odId}>
+                {GITHUB_RELEASES.label} →
+              </a>
+            </p>
           </Reveal>
         </section>
 
@@ -168,7 +214,7 @@ export default function DownloadsPage() {
               <Snippet code={`curl -fsSL ${RELEASE_DOWNLOAD}/sha256sums.txt -o sha256sums.txt && sha256sum -c sha256sums.txt`} odId="downloads-checksum-example" />
             </div>
             <p className="body" style={{ marginTop: 16 }}>
-              <a href={RELEASE_TAG} target="_blank" rel="noopener" className="ink">
+              <a href={RELEASE_TAG} target="_blank" rel="noreferrer" className="ink">
                 View full release notes on GitHub
               </a>
             </p>

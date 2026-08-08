@@ -9,7 +9,7 @@ export default function Footer() {
       <Reveal className="container">
         <div className="foot-links" data-od-id="footer-links">
           <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
-          <a href="https://www.producthunt.com/products/niki-2" target="_blank" rel="noopener">Product Hunt</a>
+          <Link to="/privacy">Privacy</Link>
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>

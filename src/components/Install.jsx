@@ -1,22 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
+import { track } from '../analytics.jsx'
 
 const REPO_URL = 'https://github.com/RavaniRoshan/niki'
-const RELEASES_URL = `${REPO_URL}/releases`
 
-const INSTALLERS = [
-  {
-    id: 'unix',
-    label: 'Linux / macOS',
-    cmd: 'curl -fsSL https://raw.githubusercontent.com/RavaniRoshan/niki/master/install.sh | sh',
-  },
-  {
-    id: 'windows',
-    label: 'Windows',
-    cmd: 'irm https://raw.githubusercontent.com/RavaniRoshan/niki/master/install.ps1 | iex',
-  },
-]
+
 
 const STEPS = [
   {
@@ -48,6 +37,7 @@ function Snippet({ code, odId }) {
         await navigator.clipboard.writeText(code)
         setCopied(true)
         setTimeout(() => setCopied(false), 1200)
+        track('install_copy_command', { code })
         return
       }
     } catch {
@@ -78,42 +68,34 @@ export default function Install() {
       <Reveal className="container">
         <h2 className="heading mb-lg">Install</h2>
         <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-          Install Niki in seconds. Prebuilt binaries for every platform, or build from source.
+          Self-hosted Niki is available now. Clone, build, and run — no waitlist required.
         </p>
 
         <div className="hero-cta mb-xl">
-          <Link
+          <a
             className="btn btn-primary"
-            to="/downloads"
+            href={REPO_URL}
+            target="_blank"
+            rel="noreferrer"
             data-od-id="install-downloads-btn"
+          >
+            View on GitHub
+          </a>
+          <Link
+            className="btn btn-secondary"
+            to="/downloads"
+            data-od-id="install-downloads-link"
           >
             Downloads
           </Link>
-          <a
-            className="btn btn-secondary"
-            href="#start"
-          >
-            Install from source
-          </a>
         </div>
 
         <div className="install-step">
-          <div className="install-step-title">1 — Get the binary</div>
-          <div className="stack-lg">
-            {INSTALLERS.map((i) => (
-              <div key={i.id}>
-                <span className="label" style={{ display: 'block', marginBottom: 8 }}>{i.label}</span>
-                <Snippet code={i.cmd} odId={`install-snippet-${i.id}`} />
-              </div>
-            ))}
-          </div>
-          <p className="install-note mt-lg">
-            Prebuilt binaries and package manager commands for every platform are on the{' '}
-            <Link className="ink" to="/downloads" data-od-id="install-downloads-link">
-              downloads page
-            </Link>
-            .
+          <div className="install-step-title">1 — Clone and build</div>
+          <p className="install-note" style={{ marginTop: 0, marginBottom: 8 }}>
+            The only path that works today. Prebuilt binaries and package managers are coming soon.
           </p>
+          <Snippet code={`git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release`} odId="install-snippet-step-1" />
         </div>
 
         {STEPS.map((s) => (
