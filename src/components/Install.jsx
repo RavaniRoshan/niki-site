@@ -4,8 +4,10 @@ import { Reveal } from './motion.jsx'
 import { track } from '../analytics.jsx'
 
 const REPO_URL = 'https://github.com/RavaniRoshan/niki'
+const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.2.0'
 
-
+const INSTALLER_UNIX = `curl --proto '=https' --tlsv1.2 -LsSf ${RELEASE_URL}/niki-installer.sh | sh`
+const INSTALLER_WINDOWS = `powershell -ExecutionPolicy Bypass -c "irm ${RELEASE_URL}/niki-installer.ps1 | iex"`
 
 const STEPS = [
   {
@@ -72,15 +74,21 @@ export default function Install() {
         </p>
 
         <div className="hero-cta mb-xl">
-          <a
+          <button
+            type="button"
             className="btn btn-primary"
-            href={REPO_URL}
-            target="_blank"
-            rel="noreferrer"
-            data-od-id="install-downloads-btn"
+            data-od-id="install-copy-unix"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(INSTALLER_UNIX)
+                track('install_copy_unix')
+              } catch {
+                /* ignore */
+              }
+            }}
           >
-            View on GitHub
-          </a>
+            Copy install command
+          </button>
           <Link
             className="btn btn-secondary"
             to="/downloads"
@@ -91,11 +99,24 @@ export default function Install() {
         </div>
 
         <div className="install-step">
-          <div className="install-step-title">1 — Clone and build</div>
+          <div className="install-step-title">1 — Install</div>
           <p className="install-note" style={{ marginTop: 0, marginBottom: 8 }}>
-            The only path that works today. Prebuilt binaries and package managers are coming soon.
+            Prebuilt binaries for macOS, Windows, and Linux. Run the installer for your platform:
           </p>
-          <Snippet code={`git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release`} odId="install-snippet-step-1" />
+          <div className="stack-lg">
+            <div>
+              <span className="label" style={{ display: 'block', marginBottom: 8 }}>Linux / macOS</span>
+              <Snippet code={INSTALLER_UNIX} odId="install-snippet-unix" />
+            </div>
+            <div>
+              <span className="label" style={{ display: 'block', marginBottom: 8 }}>Windows (PowerShell)</span>
+              <Snippet code={INSTALLER_WINDOWS} odId="install-snippet-windows" />
+            </div>
+          </div>
+          <p className="install-note mt-lg">
+            Or build from source:{' '}
+            <code style={{ fontSize: '0.85em' }}>git clone https://github.com/RavaniRoshan/niki.git &amp;&amp; cd niki &amp;&amp; cargo build --release</code>
+          </p>
         </div>
 
         {STEPS.map((s) => (

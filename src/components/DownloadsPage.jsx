@@ -10,25 +10,25 @@ const RELEASE_DOWNLOAD = `https://github.com/RavaniRoshan/niki/releases/download
 const RELEASE_TAG = `https://github.com/RavaniRoshan/niki/releases/tag/${RELEASE_VERSION}`
 
 const BINARIES = [
-  { platform: 'macOS Apple Silicon', arch: 'aarch64', filename: 'niki-aarch64-apple-darwin.tar.xz', available: false },
-  { platform: 'macOS Intel', arch: 'x86_64', filename: 'niki-x86_64-apple-darwin.tar.xz', available: false },
-  { platform: 'Windows x64', arch: 'x86_64', filename: 'niki-x86_64-pc-windows-msvc.zip', available: false },
-  { platform: 'Linux ARM64', arch: 'aarch64', filename: 'niki-aarch64-unknown-linux-gnu.tar.xz', available: false },
-  { platform: 'Linux x64', arch: 'x86_64', filename: 'niki-x86_64-unknown-linux-gnu.tar.xz', available: false },
+  { platform: 'macOS Apple Silicon', arch: 'aarch64', filename: 'niki-aarch64-apple-darwin.tar.xz', available: true },
+  { platform: 'macOS Intel', arch: 'x86_64', filename: 'niki-x86_64-apple-darwin.tar.xz', available: true },
+  { platform: 'Windows x64', arch: 'x86_64', filename: 'niki-x86_64-pc-windows-msvc.zip', available: true },
+  { platform: 'Linux ARM64', arch: 'aarch64', filename: 'niki-aarch64-unknown-linux-gnu.tar.xz', available: true },
+  { platform: 'Linux x64', arch: 'x86_64', filename: 'niki-x86_64-unknown-linux-gnu.tar.xz', available: true },
 ]
 
 const INSTALLERS = [
   {
     id: 'unix',
     label: 'Linux / macOS',
-    cmd: `curl -fsSL https://install.niki.dev | sh`,
-    available: false,
+    cmd: `curl --proto '=https' --tlsv1.2 -LsSf ${RELEASE_DOWNLOAD}/niki-installer.sh | sh`,
+    available: true,
   },
   {
     id: 'windows',
     label: 'Windows',
-    cmd: `irm https://install.niki.dev | iex`,
-    available: false,
+    cmd: `powershell -ExecutionPolicy Bypass -c "irm ${RELEASE_DOWNLOAD}/niki-installer.ps1 | iex"`,
+    available: true,
   },
 ]
 
@@ -91,7 +91,7 @@ export default function DownloadsPage() {
     <>
       <Seo
         title="Niki — Downloads"
-        description="Niki binaries, installers, and package manager commands. Self-hosted builds work today; prebuilt releases are coming soon."
+        description="Download Niki v0.2.0 binaries and installers for macOS, Windows, and Linux. Self-hosted and open source."
         path="/downloads"
       />
       <TopNav />
@@ -103,8 +103,7 @@ export default function DownloadsPage() {
             </span>
             <h1 className="heading mb-lg">Niki — Downloads</h1>
             <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-              All distribution assets for Niki {RELEASE_VERSION}. Direct binaries, installer scripts,
-              and package manager commands for every supported platform.
+              Prebuilt binaries and installer scripts for Niki {RELEASE_VERSION}. macOS, Windows, and Linux — all platforms supported.
             </p>
           </Reveal>
         </section>
@@ -122,7 +121,7 @@ export default function DownloadsPage() {
                 </tr>
               </thead>
               <tbody>
-                {BINARIES.map((b) => (
+                 {BINARIES.map((b) => (
                   <tr key={b.filename}>
                     <td>{b.platform}</td>
                     <td>{b.arch}</td>
@@ -131,13 +130,22 @@ export default function DownloadsPage() {
                     </td>
                     <td>
                       {b.available ? (
-                        <a
-                          className="btn btn-primary"
-                          href={`${RELEASE_DOWNLOAD}/${b.filename}`}
-                          data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                        >
-                          Download
-                        </a>
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                          <a
+                            className="btn btn-primary"
+                            href={`${RELEASE_DOWNLOAD}/${b.filename}`}
+                            data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                          >
+                            Download
+                          </a>
+                          <a
+                            className="ink"
+                            href={`${RELEASE_DOWNLOAD}/${b.filename}.sha256`}
+                            data-od-id={`checksum-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                          >
+                            .sha256
+                          </a>
+                        </div>
                       ) : (
                         <span className="tier-badge tier-badge-soon" data-od-id={`download-${b.arch}-${b.platform.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>Coming soon</span>
                       )}
@@ -211,7 +219,7 @@ export default function DownloadsPage() {
               SHA-256 checksums for every asset are published with the release. Download the checksums file and verify:
             </p>
             <div className="stack-lg">
-              <Snippet code={`curl -fsSL ${RELEASE_DOWNLOAD}/sha256sums.txt -o sha256sums.txt && sha256sum -c sha256sums.txt`} odId="downloads-checksum-example" />
+              <Snippet code={`curl -fsSL ${RELEASE_DOWNLOAD}/sha256.sum -o sha256.sum && sha256sum -c sha256.sum`} odId="downloads-checksum-example" />
             </div>
             <p className="body" style={{ marginTop: 16 }}>
               <a href={RELEASE_TAG} target="_blank" rel="noreferrer" className="ink">
