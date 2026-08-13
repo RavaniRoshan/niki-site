@@ -66,7 +66,7 @@ function Snippet({ code, odId }) {
 
 export default function Install() {
   return (
-    <section className="section" data-od-id="install" id="start">
+    <section className="section section--dark" data-od-id="install" id="start">
       <Reveal className="container">
         <h2 className="heading mb-lg">Install</h2>
         <p className="body mb-xl" style={{ maxWidth: '52ch' }}>

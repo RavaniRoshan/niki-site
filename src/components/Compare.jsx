@@ -11,7 +11,7 @@ import { Reveal } from './motion.jsx'
 
 export default function Compare() {
   return (
-    <section className="section" data-od-id="compare" id="compare">
+    <section className="section section--warm" data-od-id="compare" id="compare">
       <Reveal className="container">
         <h2 className="heading mb-lg">Built for review, not auto-merge theater</h2>
         <p className="body mb-xxl" style={{ maxWidth: '48ch' }}>

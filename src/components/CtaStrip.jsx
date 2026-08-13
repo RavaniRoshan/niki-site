@@ -4,7 +4,7 @@ const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
 
 export default function CtaStrip() {
   return (
-    <section className="section" data-od-id="cta-strip" style={{ textAlign: 'left' }}>
+    <section className="section section--dark" data-od-id="cta-strip" style={{ textAlign: 'left' }}>
       <Reveal className="container">
         <h2 className="heading mb-lg">Read the code. Run a task. Review the branch.</h2>
         <p className="body mb-xl" style={{ maxWidth: '48ch' }}>

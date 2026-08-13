@@ -12,7 +12,7 @@ import { Reveal, Stagger, StaggerItem } from './motion.jsx'
 
 export default function Shipped() {
   return (
-    <section className="section" data-od-id="shipped" id="shipped">
+    <section className="section section--cool" data-od-id="shipped" id="shipped">
       <div className="container">
         <Reveal>
           <h2 className="heading mb-lg">Shipped in v2</h2>

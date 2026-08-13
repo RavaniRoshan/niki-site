@@ -22,7 +22,7 @@ export default function TopNav() {
           <Link to="/waitlist">Waitlist</Link>
           <Link to="/#faq">FAQ</Link>
         </nav>
-        <div className="topnav-actions" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="topnav-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <button
             type="button"
             className="theme-toggle"

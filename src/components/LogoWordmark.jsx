@@ -7,13 +7,6 @@ const WORDMARK = `███╗   ██╗██╗██╗  ██╗██╗
 ██║ ╚████║██║██║  ██╗██╗
 ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝╚═╝`
 
-// Mono-width glyphs so the block never reflows mid-animation.
-const SCRAMBLE_CHARS = '█╗║▌▐░▒▓│┤┐└┴┬├─┼╣╚╔╩╦╠═╬<>/\\#$%&*+ABCDEF0123456789'
-
-// Small hover delay (ms) so the decode doesn't trigger the instant the cursor
-// touches the mark — a brief grace period before the animation starts.
-const START_DELAY = 250
-
 export default function LogoWordmark({
   as = 'a',
   href = '#top',
@@ -22,86 +15,92 @@ export default function LogoWordmark({
   dataOdId,
 }) {
   const [logoText, setLogoText] = useState(WORDMARK)
+  const [isStreaming, setIsStreaming] = useState(false)
   const rafRef = useRef(null)
-  const hoverTimerRef = useRef(null)
 
-  const cancelScramble = () => {
+  const stopStream = () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
     rafRef.current = null
   }
 
-  const clearHoverTimer = () => {
-    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current)
-    hoverTimerRef.current = null
-  }
-
-  const runScramble = () => {
-    clearHoverTimer()
-    cancelScramble()
-    const duration = 650
+  const startStream = () => {
+    stopStream()
+    setIsStreaming(true)
     const total = WORDMARK.length
     const start = performance.now()
+    const duration = 400 // ms to stream the whole logo
+
     const tick = (now) => {
       const progress = Math.min((now - start) / duration, 1)
       const resolved = Math.floor(progress * total)
-      let out = ''
-      for (let i = 0; i < total; i++) {
-        const c = WORDMARK[i]
-        if (c === '\n' || c === ' ') {
-          out += c
-        } else if (i < resolved) {
-          out += c
-        } else {
-          out += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
-        }
-      }
-      setLogoText(out)
+      
+      setLogoText(WORDMARK.slice(0, resolved))
+
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(tick)
       } else {
-        setLogoText(WORDMARK)
+        setIsStreaming(false)
         rafRef.current = null
       }
     }
     rafRef.current = requestAnimationFrame(tick)
   }
 
-  const scheduleScramble = () => {
-    clearHoverTimer()
-    hoverTimerRef.current = setTimeout(runScramble, START_DELAY)
-  }
-
-  const cancelAll = () => {
-    clearHoverTimer()
-    cancelScramble()
+  const resetStream = () => {
+    stopStream()
+    setIsStreaming(false)
     setLogoText(WORDMARK)
   }
 
-  useEffect(() => cancelAll, [])
+  useEffect(() => resetStream, [])
 
   const commonProps = {
     className: `wordmark ${className}`.trim(),
     'aria-label': ariaLabel,
     'data-od-id': dataOdId,
-    onMouseEnter: scheduleScramble,
-    onMouseLeave: cancelAll,
-    onFocus: scheduleScramble,
-    onBlur: cancelAll,
+    onMouseEnter: startStream,
+    onMouseLeave: resetStream,
+    onFocus: startStream,
+    onBlur: resetStream,
   }
+
+  const cursor = isStreaming ? <span className="wordmark-cursor">█</span> : null
+
+  const content = (
+    <>
+      {/* Invisible placeholder maintains the exact width and height of the full logo */}
+      <span style={{ visibility: 'hidden', display: 'block', pointerEvents: 'none' }}>
+        {WORDMARK}
+      </span>
+      {/* Absolute overlay for the streaming text */}
+      <span style={{ position: 'absolute', top: 0, left: 0, whiteSpace: 'pre' }}>
+        {logoText}{cursor}
+      </span>
+    </>
+  )
+
+  const textContent = (
+    <>
+      <span style={{ visibility: 'hidden', pointerEvents: 'none' }}>Niki</span>
+      <span style={{ position: 'absolute', top: 0, left: 0, whiteSpace: 'nowrap' }}>
+        {isStreaming ? 'Niki'.slice(0, Math.floor((logoText.length / WORDMARK.length) * 4)) : 'Niki'}{cursor}
+      </span>
+    </>
+  )
 
   if (as === 'a') {
     return (
       <a href={href} {...commonProps}>
-        <span className="wordmark-art" aria-hidden="true">{logoText}</span>
-        <span className="wordmark-text">Niki</span>
+        <span className="wordmark-art" aria-hidden="true">{content}</span>
+        <span className="wordmark-text">{textContent}</span>
       </a>
     )
   }
 
   return (
     <div {...commonProps} tabIndex={0} role="img">
-      <span className="wordmark-art" aria-hidden="true">{logoText}</span>
-      <span className="wordmark-text">Niki</span>
+      <span className="wordmark-art" aria-hidden="true">{content}</span>
+      <span className="wordmark-text">{textContent}</span>
     </div>
   )
 }

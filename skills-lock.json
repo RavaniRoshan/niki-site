@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "deep-research": {
+      "source": "samber/cc-skills",
+      "sourceType": "github",
+      "skillPath": "skills/deep-research/SKILL.md",
+      "computedHash": "ae7f9b06efcbe6263238396bdc70e2aaf0cc6ae1b288a320a9ca8731d8bd5030"
+    }
+  }
+}

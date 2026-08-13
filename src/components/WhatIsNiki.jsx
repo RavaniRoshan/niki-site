@@ -60,10 +60,10 @@ import { Reveal, Stagger, StaggerItem } from './motion.jsx'
 
 export default function WhatIsNiki() {
   return (
-    <section className="section" data-od-id="what" id="why">
+    <section className="section section--subtle" data-od-id="what" id="why">
       <div className="container">
         <Reveal>
-          <h2 className="heading mb-lg">What is Niki?</h2>
+          <h2 className="heading text-gradient mb-lg">What is Niki?</h2>
           <p className="body mb-xl" style={{ maxWidth: '58ch' }}>
             Niki is a hermetic multi-agent AI coding system for teams that want safer,
             reviewable software changes. Instead of one long AI conversation, it splits work across
@@ -73,7 +73,7 @@ export default function WhatIsNiki() {
         </Reveal>
         <Stagger className="stack-lg">
           {FEATURES.map((f) => (
-            <StaggerItem className="list-row" data-od-id={f.id} key={f.id}>
+            <StaggerItem className="list-row list-row-hover" data-od-id={f.id} key={f.id}>
               <span className="mark">[+]</span>
               <div>{f.text}</div>
             </StaggerItem>

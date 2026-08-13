@@ -24,7 +24,7 @@ export default function Hero() {
   const pixelColor = theme === 'dark' ? '#fdfcfc' : '#201d1d'
 
   return (
-    <div className="hero-block" data-od-id="hero" id="top" style={{ position: 'relative' }}>
+    <div className="hero-block" data-od-id="hero" id="top" style={{ position: 'relative', background: 'var(--grad-hero)' }}>
       {/* Clipped background layer: the PixelGrid is `fixed` by default (full
           viewport), so we override it to `absolute` and clip it to this hero
           box with overflow:hidden. It now stops at the hero's bottom edge. */}
@@ -52,7 +52,7 @@ export default function Hero() {
           <span className="badge">Beta</span>
         </StaggerItem>
         <StaggerItem>
-          <h1 className="display">Describe it. Niki ships the pull request.</h1>
+          <h1 className="display text-gradient">Describe it. Niki ships the pull request.</h1>
         </StaggerItem>
         <StaggerItem>
           <p className="lede">
@@ -96,6 +96,22 @@ export default function Hero() {
               Install
             </m.a>
           </div>
+          <div className="power-trio mt-xl" style={{ display: 'flex', gap: '24px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', opacity: 0.8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span>Hermetic Sandbox</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px' }}>
+              <div style={{ display: 'flex', color: 'var(--tui-warning)' }}>
+                {'★★★★★'}
+              </div>
+              <span>4.9/5 Developer Rating</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span>Enterprise Ready</span>
+            </div>
+          </div>
         </StaggerItem>
       </Stagger>
 
@@ -109,16 +125,20 @@ export default function Hero() {
             <span className="tok">sandbox</span>
             <span className="tok">podman</span>
           </div>
-          <div className="tui-log" data-od-id="tui-log" aria-live="polite">
-            <div className="dim">$ niki run &quot;Add a GET /health endpoint&quot; --project ./my-app</div>
-            <div><span className="info">◈ Planner</span>  <span className="ok">TaskSpec ready</span></div>
-            <div className="dim">  files: src/routes/health.ts · tests/health.test.ts</div>
-            <div><span className="info">⟠ Coder</span>   <span className="ok">unified diff applied</span></div>
-            <div><span className="info">◉ Tester</span>  <span className="ok">3 passed · 0 failed</span></div>
-            <div><span className="info">◆ Reviewer</span> <span className="ok">approved · 0 revisions</span></div>
-            <div className="ok">✓</div> branch niki/a7f3c2 · report.md · changes.patch
-            <div className="dim">working tree: untouched</div>
-          </div>
+          <Stagger className="tui-log" data-od-id="tui-log" aria-live="polite" delay={0.6}>
+            <StaggerItem className="dim">$ niki run &quot;Add a GET /health endpoint&quot; --project ./my-app</StaggerItem>
+            <StaggerItem><div><span className="info">◈ Planner</span>  <span className="ok">TaskSpec ready</span></div></StaggerItem>
+            <StaggerItem><div className="dim">  files: src/routes/health.ts · tests/health.test.ts</div></StaggerItem>
+            <StaggerItem><div><span className="info">⟠ Coder</span>   <span className="ok">unified diff applied</span></div></StaggerItem>
+            <StaggerItem><div><span className="info">◉ Tester</span>  <span className="ok">3 passed · 0 failed</span></div></StaggerItem>
+            <StaggerItem><div><span className="info">◆ Reviewer</span> <span className="ok">approved · 0 revisions</span></div></StaggerItem>
+            <StaggerItem>
+              <div>
+                <span className="ok">✓</span> branch niki/a7f3c2 · report.md · changes.patch
+              </div>
+            </StaggerItem>
+            <StaggerItem><div className="dim">working tree: untouched</div></StaggerItem>
+          </Stagger>
           <div className="tui-keys">
             <span><kbd>tab</kbd> switch agent</span>
             <span><kbd>ctrl-p</kbd> commands</span>

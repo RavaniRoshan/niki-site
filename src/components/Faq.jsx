@@ -54,7 +54,7 @@ export default function Faq() {
   }
 
   return (
-    <section className="section" data-od-id="faq" id="faq">
+    <section className="section section--subtle" data-od-id="faq" id="faq">
       <Reveal className="container">
         <h2 className="heading mb-xl">FAQ</h2>
         {FAQS.map((f) => {

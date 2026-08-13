@@ -102,7 +102,7 @@ export default function FeatureScroller({ motionOk, paused }) {
               className={`fs-card${i === active ? ' is-active' : ''}`}
               data-od-id={`hiw-agent-${a.key}`}
             >
-              <div className="fs-card-media">
+              <div className="fs-card-media" style={{ borderTop: `2px solid ${a.color}`, boxShadow: `inset 0 1px 20px ${a.color}22` }}>
                 <DemoClip clipKey={a.key} motionOk={motionOk} paused={paused}
                   label={`${a.name} demo`} />
               </div>
