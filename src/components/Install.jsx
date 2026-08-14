@@ -4,7 +4,7 @@ import { Reveal } from './motion.jsx'
 import { track } from '../analytics.jsx'
 
 const REPO_URL = 'https://github.com/RavaniRoshan/niki'
-const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.2.0'
+const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.3.1'
 
 const INSTALLER_UNIX = `curl --proto '=https' --tlsv1.2 -LsSf ${RELEASE_URL}/niki-installer.sh | sh`
 const INSTALLER_WINDOWS = `powershell -ExecutionPolicy Bypass -c "irm ${RELEASE_URL}/niki-installer.ps1 | iex"`

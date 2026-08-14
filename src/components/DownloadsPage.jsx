@@ -5,7 +5,7 @@ import Footer from './Footer.jsx'
 import { Reveal } from './motion.jsx'
 import { Seo } from '../seo.jsx'
 
-const RELEASE_VERSION = 'v0.2.0'
+const RELEASE_VERSION = 'v0.3.1'
 const RELEASE_DOWNLOAD = `https://github.com/RavaniRoshan/niki/releases/download/${RELEASE_VERSION}`
 const RELEASE_TAG = `https://github.com/RavaniRoshan/niki/releases/tag/${RELEASE_VERSION}`
 
@@ -33,10 +33,10 @@ const INSTALLERS = [
 ]
 
 const PACKAGES = [
-  { label: 'Homebrew (macOS)', cmd: 'brew install ravaniroshan/tap/niki', available: false },
-  { label: 'winget (Windows)', cmd: 'winget install niki', available: false },
-  { label: 'Scoop (Windows)', cmd: 'scoop install niki', available: false },
-  { label: 'Cargo (any)', cmd: 'cargo install niki', available: false },
+  { label: 'Homebrew (macOS)', cmd: 'brew install niki', available: true },
+  { label: 'winget (Windows)', cmd: 'winget install RavaniRoshan.niki', available: true },
+  { label: 'Scoop (Windows)', cmd: 'scoop install niki', available: true },
+  { label: 'Source', cmd: 'git clone https://github.com/RavaniRoshan/niki.git && cd niki && cargo build --release', available: true },
 ]
 
 const SOURCE_BUILD = {
@@ -91,7 +91,7 @@ export default function DownloadsPage() {
     <>
       <Seo
         title="Niki — Downloads"
-        description="Download Niki v0.2.0 binaries and installers for macOS, Windows, and Linux. Self-hosted and open source."
+        description="Download Niki v0.3.1 binaries and installers for macOS, Windows, and Linux. Self-hosted and open source."
         path="/downloads"
       />
       <TopNav />
@@ -99,7 +99,7 @@ export default function DownloadsPage() {
         <section className="section" data-od-id="downloads-hero">
           <Reveal className="container">
             <span className="tier-badge tier-badge-ready" style={{ marginBottom: 16, display: 'inline-block' }}>
-              v0.2.0
+              v0.3.1
             </span>
             <h1 className="heading mb-lg">Niki — Downloads</h1>
             <p className="body mb-xl" style={{ maxWidth: '52ch' }}>

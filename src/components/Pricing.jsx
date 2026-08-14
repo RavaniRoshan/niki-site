@@ -47,13 +47,13 @@ Run NIKI on your own infrastructure. Bring your own API keys, run on local
           </div>
 
           {/* ── Pro / Usage Based ── */}
-          <div className="tier" data-od-id="tier-pro" style={{ borderColor: 'var(--tui-accent)', boxShadow: 'var(--shadow-elevated)' }}>
+          <div className="tier" data-od-id="tier-pro" style={{ borderColor: 'var(--tui-accent)', boxShadow: 'var(--shadow-elevated)', opacity: 0.7 }}>
             <div className="tier-head">
-              <span className="tier-badge" style={{ background: 'var(--tui-accent)', color: 'var(--bg)', border: 'none' }}>Most Popular</span>
+              <span className="tier-badge" style={{ background: 'var(--muted)', color: 'var(--bg)', border: 'none' }}>Coming Soon</span>
               <h3 className="tier-name text-gradient">Pro (Managed)</h3>
-              <div className="tier-price">${proPrice}<span style={{ fontSize: '14px', color: 'var(--muted)', fontWeight: '400' }}>/mo</span></div>
+              <div className="tier-price">—</div>
               <p className="tier-lede">
-                Managed infrastructure for fast execution. Pricing scales with token usage.
+                Managed infrastructure for fast execution. Not yet available — join the waitlist to be first in line.
               </p>
               
               <div style={{ marginTop: '16px' }}>
@@ -74,27 +74,26 @@ Run NIKI on your own infrastructure. Bring your own API keys, run on local
             <ul className="tier-features">
               <li><span className="mark">[x]</span> Zero config infrastructure</li>
               <li><span className="mark">[x]</span> Unlimited sandboxed workflows</li>
-              <li><span className="mark">[x]</span> Priority model access</li>
+              <li><span className="mark">[ ]</span> Priority model access (roadmap)</li>
               <li><span className="mark">[x]</span> Review branch before merge</li>
             </ul>
 
             <div className="tier-cta" style={{ display: 'flex', gap: '8px' }}>
-              <a className="btn btn-primary" href={enterpriseWaitlist} style={{ flex: 1, background: 'var(--tui-accent)', borderColor: 'var(--tui-accent)' }}>Start Trial</a>
+              <a className="btn btn-secondary" href={enterpriseWaitlist} style={{ flex: 1 }}>Join Waitlist</a>
             </div>
           </div>
 
           {/* ── Enterprise ── */}
-          <div className="tier" data-od-id="tier-enterprise" style={{ background: 'var(--surface-soft)' }}>
+          <div className="tier" data-od-id="tier-enterprise" style={{ background: 'var(--surface-soft)', opacity: 0.7 }}>
             <div className="tier-head">
+              <span className="tier-badge" style={{ background: 'var(--muted)', color: 'var(--bg)', border: 'none' }}>Coming Soon</span>
               <h3 className="tier-name">Enterprise</h3>
-              <div className="tier-price" style={{ fontSize: '24px' }}>Custom</div>
+              <div className="tier-price" style={{ fontSize: '24px' }}>—</div>
               <p className="tier-lede">
-                NIKI provides all managed infrastructure. Run an effectively unlimited number
-                of agents and use cases without owning compute. Same hermetic safety guarantee —
-                proof is still computed client-side.
+                Fully managed infrastructure. Not yet available — join the waitlist for early access.
               </p>
               <p className="tier-note">
-                Cloud is optional — not required for core value, and not part of the free tier.
+                Cloud is optional — not required for core value.
               </p>
             </div>
 
@@ -102,7 +101,7 @@ Run NIKI on your own infrastructure. Bring your own API keys, run on local
               <li><span className="mark">[x]</span> Fully managed infrastructure</li>
               <li><span className="mark">[x]</span> No compute to own or operate</li>
               <li><span className="mark">[x]</span> Effectively unlimited scale</li>
-              <li><span className="mark">[x]</span> Enterprise support &amp; SSO (planned)</li>
+              <li><span className="mark">[ ]</span> Enterprise support &amp; SSO (roadmap)</li>
             </ul>
 
             <div className="tier-cta" style={{ display: 'flex', gap: '8px', flexDirection: 'column' }}>

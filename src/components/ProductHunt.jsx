@@ -5,9 +5,9 @@ export default function ProductHunt() {
   return (
     <section className="section" data-od-id="producthunt" id="producthunt">
       <Reveal className="container">
-        <h2 className="heading mb-lg">Product Hunt launch — soon</h2>
+        <h2 className="heading mb-lg">Product Hunt launch — August 18</h2>
         <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-          Niki is about to launch on Product Hunt. Try Niki now for free,
+          Niki launches on Product Hunt Tuesday August 18. Try Niki now for free,
           self-hosted — no waitlist required for the open-source build.
         </p>
         <div className="producthunt-card">

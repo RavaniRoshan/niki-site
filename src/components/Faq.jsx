@@ -21,7 +21,7 @@ const FAQS = [
   {
     id: 'faq-license',
     q: 'What is the license?',
-    a: 'Business Source License 1.1 (BUSL-1.1). See the repository Cargo.toml and LICENSE for distribution terms. Status: prototype.',
+    a: 'Apache-2.0. Open source, free forever. See the repository Cargo.toml and LICENSE for full terms. Status: beta.',
   },
   {
     id: 'faq-docker',

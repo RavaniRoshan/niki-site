@@ -52,12 +52,12 @@ export default function Hero() {
           <span className="badge">Beta</span>
         </StaggerItem>
         <StaggerItem>
-          <h1 className="display text-gradient">Describe it. Niki ships the pull request.</h1>
+          <h1 className="display text-gradient">Describe it. Niki ships a verified pull request.</h1>
         </StaggerItem>
         <StaggerItem>
           <p className="lede">
             Niki is an AI software engineering assistant that turns a requested change into a
-            reviewable pull request branch. Four isolated agents — Planner, Coder, Tester, Reviewer —
+            verified pull request branch. Four isolated agents — Planner, Coder, Tester, Reviewer —
             collaborate inside a Podman or Docker sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong>
             branch. Your working tree is never touched.
           </p>
@@ -105,11 +105,7 @@ export default function Hero() {
               <div style={{ display: 'flex', color: 'var(--tui-warning)' }}>
                 {'★★★★★'}
               </div>
-              <span>4.9/5 Developer Rating</span>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px' }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span>Enterprise Ready</span>
+              <span>Apache-2.0 Open Source</span>
             </div>
           </div>
         </StaggerItem>
@@ -140,9 +136,9 @@ export default function Hero() {
             <StaggerItem><div className="dim">working tree: untouched</div></StaggerItem>
           </Stagger>
           <div className="tui-keys">
-            <span><kbd>tab</kbd> switch agent</span>
+            <span><kbd>tab</kbd> toggle view</span>
             <span><kbd>ctrl-p</kbd> commands</span>
-            <span><kbd>esc</kbd> cancel run</span>
+            <span><kbd>esc</kbd> quit (run continues)</span>
           </div>
         </div>
       </Reveal>

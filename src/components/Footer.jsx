@@ -18,7 +18,7 @@ export default function Footer() {
           <Link to="/#faq">FAQ</Link>
         </div>
         <div className="foot-bottom">
-          <span>© 2026 Niki · BUSL-1.1 · Built in Rust</span>
+          <span>© 2026 Niki · Apache-2.0 · Built in Rust</span>
           <span>
             <a href={GITHUB_URL} target="_blank" rel="noopener">Source</a>
             · Hermetic agents · BYOK
