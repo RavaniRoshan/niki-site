@@ -11,11 +11,6 @@ function getInitialTheme() {
   return 'light'
 }
 
-function getSystemTheme() {
-  if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(getInitialTheme)
   const [explicitTheme, setExplicitTheme] = useState(() => {

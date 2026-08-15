@@ -7,7 +7,6 @@ const ENTERPRISE_MAILTO = 'mailto:enterprise@niki.dev?subject=NIKI%20Enterprise'
 
 export default function Pricing() {
   const [tokens, setTokens] = useState(1)
-  const proPrice = tokens * 15 // Base $15 per M tokens
   const enterpriseWaitlist = `/waitlist?segment=${encodeURIComponent(SEGMENT_MANAGED_CLOUD)}`
 
   return (

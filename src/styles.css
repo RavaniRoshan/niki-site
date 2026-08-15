@@ -64,10 +64,9 @@
 
 /* ── breakpoint system ──
    Two breakpoints drive all responsive rules:
-     ≤ 850px  : tablet / large phone  (--bp-md)
-     ≤ 640px  : phone                (--bp-sm)
-   The FeatureScroller two-column layout opts in at >= 851px.
-   Keep every responsive rule on one of these two widths. */
+      ≤ 850px  : tablet / large phone  (--bp-md)
+      ≤ 640px  : phone                (--bp-sm)
+    Keep every responsive rule on one of these two widths. */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
 /* Eased, anchor-aware scrolling — but never for reduced-motion users, who get
@@ -1267,8 +1266,8 @@ strong { font-weight: 500; }
 }
 
 /* The demo clip fills the media band. On HIW cards the 16/10 band matches the
-   1200x750 (1.6) source so `contain` shows the full terminal frame with no
-   cropping. FeatureScroller cards keep `cover` (full-bleed) — see below. */
+    1200x750 (1.6) source so `contain` shows the full terminal frame with no
+    cropping. */
 .hiw-clip-media {
   position: absolute;
   inset: 0;

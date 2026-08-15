@@ -12,6 +12,7 @@ const WaitlistPage = React.lazy(() => import('./components/WaitlistPage.jsx'))
 const DownloadsPage = React.lazy(() => import('./components/DownloadsPage.jsx'))
 const PrivacyPage = React.lazy(() => import('./components/PrivacyPage.jsx'))
 const ProductHuntPage = React.lazy(() => import('./components/ProductHuntPage.jsx'))
+const ProofPage = React.lazy(() => import('./components/ProofPage.jsx'))
 const NotFound = React.lazy(() => import('./components/NotFound.jsx'))
 import { ThemeProvider } from './theme.jsx'
 import SiteAnalytics from './analytics.jsx'
@@ -48,6 +49,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/downloads" element={<DownloadsPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/producthunt" element={<ProductHuntPage />} />
+              <Route path="/proof" element={<ProofPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

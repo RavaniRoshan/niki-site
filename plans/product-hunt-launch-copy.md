@@ -18,7 +18,7 @@ Multi-agent AI coding that ships pull requests, not prompts
 <!-- count: 59 -->
 
 Alternatives (not used):
-- `5 AI agents. 1 task. Reviewable pull request.` (46)
+- `4 AI agents. 1 task. Reviewable pull request.` (46)
 - `Hermetic AI agents that produce reviewable PRs` (46)
 - `Describe it. Niki ships the pull request.` (41, current site tagline)
 
@@ -26,14 +26,15 @@ PH CEO guidance applied: name the *mechanism* (multi-agent pipeline), not the ca
 
 ---
 
-## Description (≤500 chars) — `498 chars`
+## Description (≤500 chars) — `480 chars`
 Niki is an open-source multi-agent coding system. Describe what you want in natural
-language, and a team of 5 AI agents — Planner, Coder, Tester, Red Team, and Reviewer —
-collaborates to produce a reviewable git pull request. Hermetic by default: runs in a
-Podman/Docker sandbox, never touches your working tree. BYOK: use Anthropic, OpenAI,
-Google, or local models. Free and self-hosted. Cloud beta coming soon.
+language, and 4 specialized AI agents — Planner, Coder, Tester, Reviewer — collaborate
+to produce a reviewable git pull request. Hermetic by default: runs in a Podman/Docker
+sandbox, never touches your working tree. An optional adversarial "Red" agent can
+challenge the work before review. BYOK: Anthropic, OpenAI, Google, or local models.
+Free, self-hosted. Cloud beta coming soon.
 
-<!-- count: 498 -->
+<!-- count: 480 -->
 
 ---
 
@@ -64,14 +65,16 @@ with AI coding tools.
 The problem: you ask an AI to write code, it gives you a diff, you copy-paste it, hope it
 works, and debug for 20 minutes. There's no review, no testing, no adversarial check.
 
-Niki is different. It's a multi-agent system: 5 specialized AI agents (Planner, Coder,
-Tester, Red Team, Reviewer) collaborate in a sandboxed environment to produce a reviewable
-git pull request — not a code snippet.
+Niki is different. It's a multi-agent system: 4 specialized AI agents (Planner, Coder,
+Tester, Reviewer) collaborate in a sandboxed environment to produce a reviewable
+git pull request — not a code snippet. (An optional 5th adversarial "Red" agent can
+challenge the work before review.)
 
 How it works:
 • You describe what you want in natural language
 • Niki spins up a Podman/Docker sandbox (your working tree is never touched)
-• 5 agents work in sequence: plan → code → test → challenge → review
+• 4 agents work in sequence: plan → code → test → review
+• Optionally, a Red agent challenges the work before the Reviewer signs off
 • You get a branch with diff, report, and artifacts
 
 It's open-source, self-hosted, and BYOK (Anthropic, OpenAI, Google, Ollama).
@@ -100,9 +103,10 @@ Output is always on a `niki/<id>` branch.
 **Q: Can I try it now?**
 A: Yes! `cargo install niki` or `podman run …` — see the README for quick-start.
 
-**Q: What's the Red Team agent?**
-A: An adversarial agent that raises falsifiable challenges against the Coder's output. It
-never approves — its job is to find problems. The Reviewer weighs both sides.
+**Q: What's the Red agent?**
+A: An optional adversarial agent that raises falsifiable challenges against the Coder's
+output. It never approves — its job is to find problems. The Reviewer weighs both sides.
+Off by default; enable with `[red_blue] enabled = true` in niki.toml.
 
 ---
 

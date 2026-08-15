@@ -15,7 +15,7 @@ export default function Shipped() {
     <section className="section section--cool" data-od-id="shipped" id="shipped">
       <div className="container">
         <Reveal>
-          <h2 className="heading mb-lg">Shipped in v2</h2>
+          <h2 className="heading mb-lg">Shipped in v0.4.0</h2>
         </Reveal>
         <Stagger>
           {ITEMS.map(([label, desc]) => (

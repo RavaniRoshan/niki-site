@@ -14,7 +14,7 @@ export default function TopNav() {
       <div className="topnav-inner">
         <LogoWordmark ariaLabel="Niki" dataOdId="logo" />
         <nav className="topnav-links" data-od-id="nav-links">
-          <a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
@@ -43,7 +43,7 @@ export default function TopNav() {
           >
             {open ? '[x]' : '[=]'}
           </button>
-          <a className="btn btn-primary" data-od-id="nav-cta" href={GITHUB_URL} target="_blank" rel="noopener">
+          <a className="btn btn-primary" data-od-id="nav-cta" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
             GitHub ↓
           </a>
         </div>

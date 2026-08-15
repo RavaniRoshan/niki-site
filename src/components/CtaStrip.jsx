@@ -11,7 +11,7 @@ export default function CtaStrip() {
           Open source hermetic multi-agent coding — built in Rust, sandboxed in Podman or Docker, yours to fork.
         </p>
         <div className="hero-cta">
-          <a className="btn btn-dark" data-od-id="footer-cta" href={GITHUB_URL} target="_blank" rel="noopener">
+          <a className="btn btn-dark" data-od-id="footer-cta" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
             View on GitHub
           </a>
           <a className="btn btn-secondary" href="#start">Install</a>
