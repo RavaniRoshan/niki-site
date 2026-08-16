@@ -57,7 +57,7 @@ export default function PrivacyPage() {
                 className="ink"
                 href="https://github.com/RavaniRoshan/niki/issues"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 GitHub repository
               </a>{' '}
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
                 className="ink"
                 href="https://github.com/RavaniRoshan/niki/issues"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 GitHub
               </a>

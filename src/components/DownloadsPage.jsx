@@ -205,7 +205,7 @@ export default function DownloadsPage() {
               <Snippet code={SOURCE_BUILD.cmd} odId={SOURCE_BUILD.odId} />
             </div>
             <p className="body" style={{ marginTop: 24 }}>
-              <a href={GITHUB_RELEASES.url} target="_blank" rel="noreferrer" className="ink" data-od-id={GITHUB_RELEASES.odId}>
+              <a href={GITHUB_RELEASES.url} target="_blank" rel="noopener noreferrer" className="ink" data-od-id={GITHUB_RELEASES.odId}>
                 {GITHUB_RELEASES.label} →
               </a>
             </p>
@@ -222,7 +222,7 @@ export default function DownloadsPage() {
               <Snippet code={`curl -fsSL ${RELEASE_DOWNLOAD}/sha256.sum -o sha256.sum && sha256sum -c sha256.sum`} odId="downloads-checksum-example" />
             </div>
             <p className="body" style={{ marginTop: 16 }}>
-              <a href={RELEASE_TAG} target="_blank" rel="noreferrer" className="ink">
+              <a href={RELEASE_TAG} target="_blank" rel="noopener noreferrer" className="ink">
                 View full release notes on GitHub
               </a>
             </p>
