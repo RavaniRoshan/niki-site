@@ -19,8 +19,18 @@ import SiteAnalytics from './analytics.jsx'
 import './tailwind.css'
 import './styles.css'
 
+const DOCS_URL = 'https://ravaniroshan.github.io/niki/'
+
 // On route change: scroll to the hash target if present (in-page nav from any
 // route), otherwise scroll to top.
+function ExternalRedirect({ to }) {
+  useEffect(() => {
+    window.location.replace(to)
+  }, [to])
+
+  return null
+}
+
 function ScrollManager() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
@@ -50,6 +60,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
               <Route path="/privacy" element={<PrivacyPage />} />
               <Route path="/producthunt" element={<ProductHuntPage />} />
               <Route path="/proof" element={<ProofPage />} />
+              <Route path="/docs" element={<ExternalRedirect to={DOCS_URL} />} />
+              <Route path="/docs/*" element={<ExternalRedirect to={DOCS_URL} />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

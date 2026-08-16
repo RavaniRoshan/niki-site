@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/docs", "destination": "https://ravaniroshan.github.io/niki/", "permanent": true },
+    { "source": "/docs/(.*)", "destination": "https://ravaniroshan.github.io/niki/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
