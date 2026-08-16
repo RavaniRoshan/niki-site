@@ -69,7 +69,7 @@ export default function Hero() {
               data-od-id="hero-cta"
               href={GITHUB_URL}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               whileHover={{ y: -1 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.18 }}
