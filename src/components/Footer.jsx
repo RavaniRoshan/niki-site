@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 
 const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
+const DOCS_URL = 'https://ravaniroshan.github.io/niki/'
 
 export default function Footer() {
   return (
@@ -14,6 +15,7 @@ export default function Footer() {
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
           <Link to="/downloads">Downloads</Link>
+          <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">Docs</a>
           <Link to="/proof">Proof</Link>
           <Link to="/waitlist">Waitlist</Link>
           <Link to="/#faq">FAQ</Link>

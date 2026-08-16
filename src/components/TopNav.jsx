@@ -4,6 +4,7 @@ import { useTheme } from '../theme.jsx'
 import LogoWordmark from './LogoWordmark.jsx'
 
 const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
+const DOCS_URL = 'https://ravaniroshan.github.io/niki/'
 
 export default function TopNav() {
   const [open, setOpen] = useState(false)
@@ -18,8 +19,16 @@ export default function TopNav() {
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
           <Link to="/#pricing">Pricing</Link>
-          <Link to="/downloads">Downloads</Link>
-          <Link to="/waitlist">Waitlist</Link>
+          <div className="nav-menu">
+            <button type="button" className="nav-menu-trigger" aria-haspopup="true">
+              Resources ▾
+            </button>
+            <div className="nav-menu-panel" role="menu">
+              <a href={DOCS_URL} target="_blank" rel="noopener noreferrer" role="menuitem">Docs</a>
+              <Link to="/downloads" role="menuitem">Downloads</Link>
+              <Link to="/waitlist" role="menuitem">Waitlist</Link>
+            </div>
+          </div>
           <Link to="/#faq">FAQ</Link>
         </nav>
         <div className="topnav-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>

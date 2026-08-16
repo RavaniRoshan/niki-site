@@ -261,13 +261,56 @@ strong { font-weight: 500; }
   gap: 20px;
   flex-wrap: wrap;
 }
-.topnav-links a {
+.topnav-links a,
+.nav-menu-trigger {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
   color: var(--fg);
 }
-.topnav-links a:active { color: var(--muted); }
+.nav-menu {
+  position: relative;
+}
+.nav-menu-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-menu-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  display: grid;
+  min-width: 180px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-elevated);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+.nav-menu:hover .nav-menu-panel,
+.nav-menu:focus-within .nav-menu-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.nav-menu-panel a {
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.nav-menu-panel a:hover,
+.nav-menu-panel a:focus-visible {
+  background: var(--surface-soft);
+  outline: none;
+}
+.topnav-links a:active,
+.nav-menu-trigger:active { color: var(--muted); }
 .topnav-links .count { color: var(--muted); font-weight: 400; }
 
 @media (max-width: 850px) {
@@ -314,9 +357,31 @@ strong { font-weight: 500; }
   padding: 8px 24px 16px;
   box-shadow: var(--shadow-elevated);
 }
-.topnav.is-open .topnav-links a {
+.topnav.is-open .topnav-links a,
+.topnav.is-open .nav-menu-trigger {
   padding: 12px 0;
   border-bottom: 1px solid var(--border);
+}
+.topnav.is-open .nav-menu {
+  display: grid;
+}
+.topnav.is-open .nav-menu-trigger {
+  text-align: left;
+}
+.topnav.is-open .nav-menu-panel {
+  position: static;
+  min-width: 0;
+  padding: 0 0 0 16px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.topnav.is-open .nav-menu-panel a {
+  border-radius: 0;
 }
 
 /* ── buttons ── */
