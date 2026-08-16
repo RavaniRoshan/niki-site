@@ -7,3 +7,7 @@ niki-product-studio.html
 .env
 .env.local
 .env.*.local
+
+# Agent working files (local only, not in repo)
+.kilo/
+research/
