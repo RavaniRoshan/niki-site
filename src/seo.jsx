@@ -4,6 +4,9 @@ export const SITE_URL = 'https://niki-site.vercel.app'
 export const SITE_NAME = 'Niki'
 export const OG_IMAGE = `${SITE_URL}/og-image.png`
 
+export const SEO_TITLE = 'Niki · Multi-agent coding pipeline that ships verified pull requests'
+export const SEO_DESCRIPTION = 'Four independent LLM agents plan, code, test, and review in hermetic sandboxes — then hand you a verified niki/<id> branch with a full audit trail. Open source, BYOK, no telemetry.'
+
 function setMeta(selector, attrs) {
   let node = document.head.querySelector(selector)
   if (!node) {

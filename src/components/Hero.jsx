@@ -49,17 +49,16 @@ export default function Hero() {
       </div>
       <Stagger className="hero-text" onLoad>
         <StaggerItem>
-          <span className="badge">Beta</span>
+          <span className="badge">v0.4.0</span>
         </StaggerItem>
         <StaggerItem>
-          <h1 className="display text-gradient">Describe it. Niki ships a verified pull request.</h1>
+          <h1 className="display text-gradient">One sentence in, a verified pull request out.</h1>
         </StaggerItem>
         <StaggerItem>
           <p className="lede">
-            Niki is an AI software engineering assistant that turns a requested change into a
-            verified pull request branch. Four isolated agents — Planner, Coder, Tester, Reviewer —
-            collaborate inside a Podman or Docker sandbox and hand you a clean <strong className="ink">niki/&lt;id&gt;</strong>
-            branch. Your working tree is never touched.
+            Four independent LLM agents — Planner, Coder, Tester, Reviewer — run in hermetic
+            sandboxes and hand you a reviewable <strong className="ink">niki/&lt;id&gt;</strong> branch with a full audit trail.
+            Your working tree is never touched.
           </p>
         </StaggerItem>
         <StaggerItem>

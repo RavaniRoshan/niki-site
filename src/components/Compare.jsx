@@ -5,6 +5,8 @@ const ROWS = [
   ['Model policy', 'Vendor lock-in common', 'BYOK · mix providers per agent'],
   ['Audit trail', 'Chat scrollback', 'JSON artifacts + optional security pass'],
   ['Runtime', 'Proprietary cloud agents', 'Rust CLI · Podman / Docker / worktree / cloud'],
+  ['Revision loop', 'Manual steering', 'Reviewer bounces back to Coder until approved'],
+  ['Security', 'Trust the model', 'CapDrop ALL · network off · secret redaction · spend cap'],
 ]
 
 import { Reveal } from './motion.jsx'
@@ -13,7 +15,7 @@ export default function Compare() {
   return (
     <section className="section section--warm" data-od-id="compare" id="compare">
       <Reveal className="container">
-        <h2 className="heading mb-lg">Built for review, not auto-merge theater</h2>
+        <h2 className="heading mb-lg">Four agents, one verified branch</h2>
         <p className="body mb-xxl" style={{ maxWidth: '48ch' }}>
           Open source. Rust CLI. Runs where Podman or Docker does. Fire-and-forget, then review like any human
           PR.

@@ -8,8 +8,8 @@ export default function WaitlistPage() {
   return (
     <>
       <Seo
-        title="Join the Niki private beta · Hermetic AI coding agents"
-        description="Request private beta access to Niki, the AI software engineering system that runs isolated coding agents and hands teams reviewable pull request branches."
+        title="Join the Niki cloud beta · Multi-agent coding pipeline"
+        description="Request access to Niki's managed cloud beta — the open-source multi-agent coding pipeline that plans, codes, tests, and reviews in hermetic sandboxes."
         path="/waitlist"
       />
       <TopNav />

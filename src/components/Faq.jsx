@@ -21,7 +21,7 @@ const FAQS = [
   {
     id: 'faq-license',
     q: 'What is the license?',
-    a: 'Apache-2.0. Open source, free forever. See the repository Cargo.toml and LICENSE for full terms. Status: beta.',
+    a: 'Apache-2.0. Open source, free forever. See the repository Cargo.toml and LICENSE for full terms.',
   },
   {
     id: 'faq-docker',
@@ -36,7 +36,7 @@ const FAQS = [
   {
     id: 'faq-install',
     q: 'How do I install Niki?',
-    a: 'Today you clone the repo and run cargo build --release (Rust 2024 edition). Prebuilt binaries for x86_64 Linux, ARM64 Linux, x86_64 Windows, x86_64 macOS, and Apple Silicon macOS are on the way via GitHub Releases, alongside a shell installer, a PowerShell installer, winget/Scoop, a Homebrew tap, and cargo install niki.',
+    a: 'Prebuilt binaries for x86_64 Linux, ARM64 Linux, x86_64 Windows, x86_64 macOS, and Apple Silicon macOS are available now via GitHub Releases. Use `brew install niki` on macOS, or `curl -fsSL https://raw.githubusercontent.com/RavaniRoshan/niki/master/scripts/install.sh | bash` on Linux/macOS. You can also build from source with `cargo build --release`.',
   },
 ]
 

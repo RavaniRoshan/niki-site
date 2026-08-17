@@ -18,8 +18,8 @@ export default function App() {
   return (
     <>
       <Seo
-        title="Niki · AI coding agents that ship reviewable pull requests"
-        description="Niki is a hermetic multi-agent AI coding system where Planner, Coder, Tester, and Reviewer agents collaborate in a sandbox and deliver a clean pull request branch."
+        title="Niki · Multi-agent coding pipeline that ships verified pull requests"
+        description="Four independent LLM agents plan, code, test, and review in hermetic sandboxes — then hand you a verified niki/<id> branch with a full audit trail. Open source, BYOK, no telemetry."
         path="/"
       />
       <TopNav />

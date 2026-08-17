@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 import { track } from '../analytics.jsx'
 
-const REPO_URL = 'https://github.com/RavaniRoshan/niki'
 const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.4.0'
 
-const INSTALLER_UNIX = `curl --proto '=https' --tlsv1.2 -LsSf ${RELEASE_URL}/niki-installer.sh | sh`
+const INSTALLER_BREW = 'brew install niki'
+const INSTALLER_UNIX = 'curl -fsSL https://raw.githubusercontent.com/RavaniRoshan/niki/master/scripts/install.sh | bash'
 const INSTALLER_WINDOWS = `powershell -ExecutionPolicy Bypass -c "irm ${RELEASE_URL}/niki-installer.ps1 | iex"`
 
 const STEPS = [
@@ -105,7 +105,11 @@ export default function Install() {
           </p>
           <div className="stack-lg">
             <div>
-              <span className="label" style={{ display: 'block', marginBottom: 8 }}>Linux / macOS</span>
+              <span className="label" style={{ display: 'block', marginBottom: 8 }}>macOS (Homebrew)</span>
+              <Snippet code={INSTALLER_BREW} odId="install-snippet-brew" />
+            </div>
+            <div>
+              <span className="label" style={{ display: 'block', marginBottom: 8 }}>Linux / macOS (curl)</span>
               <Snippet code={INSTALLER_UNIX} odId="install-snippet-unix" />
             </div>
             <div>

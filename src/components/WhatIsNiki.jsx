@@ -65,10 +65,9 @@ export default function WhatIsNiki() {
         <Reveal>
           <h2 className="heading text-gradient mb-lg">What is Niki?</h2>
           <p className="body mb-xl" style={{ maxWidth: '58ch' }}>
-            Niki is a hermetic multi-agent AI coding system for teams that want safer,
-            reviewable software changes. Instead of one long AI conversation, it splits work across
-            Planner, Coder, Tester, and Reviewer agents. Each agent gets a bounded job, runs inside
-            an isolated sandbox, and helps produce a branch you can inspect before anything lands.
+            Niki is the open-source multi-agent coding pipeline that plans, codes, tests, and
+            reviews — then hands you a verified git branch. Four independent LLM agents run in
+            hermetic sandboxes. BYOK (bring your own key), no telemetry, no vendor lock-in.
           </p>
         </Reveal>
         <Stagger className="stack-lg">
