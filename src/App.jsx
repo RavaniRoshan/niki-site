@@ -1,5 +1,6 @@
 import TopNav from './components/TopNav.jsx'
 import Hero from './components/Hero.jsx'
+import DemoSection from './components/DemoSection.jsx'
 import WhatIsNiki from './components/WhatIsNiki.jsx'
 import HowItWorks from './components/HowItWorks.jsx'
 import Compare from './components/Compare.jsx'
@@ -26,6 +27,7 @@ export default function App() {
       <main id="content">
         <a id="top" aria-hidden="true" tabIndex={-1} />
         <Hero />
+        <DemoSection />
         <WhatIsNiki />
         <HowItWorks />
         <Compare />
