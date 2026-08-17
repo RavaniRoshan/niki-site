@@ -7,8 +7,9 @@ export default function DemoSection() {
         <Reveal>
           <h2 className="heading mb-lg">See it run</h2>
           <p className="body mb-xl" style={{ maxWidth: '52ch' }}>
-            Describe a change in plain English. Niki runs a four-stage agent pipeline
-            in an isolated container and gives you back a branch to review.
+            Open <code className="ink">niki chat</code> in your terminal. Describe what you want
+            in plain English. Niki streams back code, explanations, and follow-ups — all
+            in a rich chat interface with syntax highlighting.
           </p>
         </Reveal>
         <Reveal delay={0.1}>
@@ -22,7 +23,7 @@ export default function DemoSection() {
           }}>
             <img
               src="/demo.gif"
-              alt="Niki demo showing Planner, Coder, Tester, and Reviewer agents running"
+              alt="Niki chat interface showing a conversation about adding dark mode toggle"
               style={{
                 width: '100%',
                 height: 'auto',
@@ -32,7 +33,7 @@ export default function DemoSection() {
             />
           </div>
           <p className="caption mt-md" style={{ textAlign: 'center', opacity: 0.6 }}>
-            Real output — no tricks, no sped-up footage
+            Real terminal output — niki chat in action
           </p>
         </Reveal>
       </div>
