@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 
 const GITHUB_URL = 'https://github.com/RavaniRoshan/niki'
+const RELEASES_URL = 'https://github.com/RavaniRoshan/niki/releases'
 const DOCS_URL = 'https://ravaniroshan.github.io/niki/'
 
 export default function Footer() {
@@ -10,6 +11,7 @@ export default function Footer() {
       <Reveal className="container">
         <div className="foot-links" data-od-id="footer-links">
           <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={RELEASES_URL} target="_blank" rel="noopener noreferrer">Releases</a>
           <Link to="/privacy">Privacy</Link>
           <Link to="/#why">Why</Link>
           <Link to="/#how">Pipeline</Link>
