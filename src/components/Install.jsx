@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Reveal } from './motion.jsx'
 import { track } from '../analytics.jsx'
 
-const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.4.0'
+const RELEASE_URL = 'https://github.com/RavaniRoshan/niki/releases/download/v0.6.0'
 
 const INSTALLER_BREW = 'brew install niki'
 const INSTALLER_UNIX = 'curl -fsSL https://raw.githubusercontent.com/RavaniRoshan/niki/master/scripts/install.sh | bash'

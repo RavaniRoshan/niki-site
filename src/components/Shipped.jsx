@@ -6,6 +6,13 @@ const ITEMS = [
   ['Podman-first runtime discovery', '— probes rootless/rootful Podman sockets, then Docker; no daemon, no root'],
   ['Dashboard + cost analytics', '— token usage, latency, HTML diff viewer'],
   ['External knowledge ingestion', '— doc globs + URLs into every agent prompt'],
+  ['Visible draggable scrollbar', '— thumb + track in the chat viewport; click or drag to jump'],
+  ['Mouse hover + click system', '— every surface responds to the cursor; flash + double-click word select'],
+  ['Kill ring + yank', '— Ctrl+Y / Alt+Y; Ctrl+W/U/K delete into the ring'],
+  ['Input undo/redo', '— Ctrl+Z / Ctrl+_ revert any edit'],
+  ['Protected paths & destructive commands', '— .git, .ssh, rm -rf, sudo, git push always prompt'],
+  ['Shared skills portability', '— read/write ~/.agents/skills/ across machines'],
+  ['Kitty keyboard protocol', '— Shift+Enter disambiguation on Kitty/Ghostty/WezTerm'],
 ]
 
 import { Reveal, Stagger, StaggerItem } from './motion.jsx'
@@ -15,7 +22,7 @@ export default function Shipped() {
     <section className="section section--cool" data-od-id="shipped" id="shipped">
       <div className="container">
         <Reveal>
-          <h2 className="heading mb-lg">Shipped in v0.4.0</h2>
+          <h2 className="heading mb-lg">Shipped in v0.6.0</h2>
         </Reveal>
         <Stagger>
           {ITEMS.map(([label, desc]) => (

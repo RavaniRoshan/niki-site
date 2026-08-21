@@ -49,7 +49,7 @@ export default function Hero() {
       </div>
       <Stagger className="hero-text" onLoad>
         <StaggerItem>
-          <span className="badge">v0.4.0</span>
+          <span className="badge">v0.6.0</span>
         </StaggerItem>
         <StaggerItem>
           <h1 className="display text-gradient">One sentence in, a verified pull request out.</h1>
